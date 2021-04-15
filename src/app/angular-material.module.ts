@@ -11,6 +11,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
 
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+
 
 @NgModule({
 //  imports: [
@@ -33,7 +38,12 @@ import { MatDialogModule } from '@angular/material/dialog';
   MatExpansionModule,
   MatProgressSpinnerModule,
   MatPaginatorModule,
-  MatDialogModule
+  MatDialogModule,
+
+  MatAutocompleteModule,
+  MatRadioModule,
+  MatFormFieldModule,
+  MatSelectModule
  ]
 })
 export class AngularMaterialModule {

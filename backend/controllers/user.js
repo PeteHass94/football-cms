@@ -9,7 +9,14 @@ exports.createUser = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
       const user = new User({
-        email: req.body.email,
+        //email: req.body.email,
+        username: req.body.username,
+        userType: req.body.userType,
+        role: req.body.role,
+        name: req.body.name,
+        dob: req.body.dob,
+        club: req.body.club,
+        team: req.body.team,
         password: hash
       });
       user.save()
@@ -33,7 +40,7 @@ exports.createUser = (req, res, next) => {
 exports.userLogin = (req, res, next) => {
   let fetchedUser;
   //console.log(User.find());
-  User.findOne( {email: req.body.email } )
+  User.findOne( {username: req.body.username } )
     .then(user => {
       //console.log(user);
       //if user doesn't exist
@@ -60,7 +67,7 @@ exports.userLogin = (req, res, next) => {
       }
       //if password is correct
       const token = jwt.sign(
-        { email: fetchedUser.email, userId: fetchedUser._id },
+        { username: fetchedUser.username, userId: fetchedUser._id },
         process.env.JWT_KEY,
         {expiresIn: "1h" }
       );

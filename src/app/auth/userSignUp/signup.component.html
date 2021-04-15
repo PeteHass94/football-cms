@@ -10,15 +10,45 @@
     <mat-form-field>
       <input
       matInput
-      type="email"
-      name="email"
+      type="text"
+      name="name"
       ngModel
-      placeholder="Email Address"
-      #emailInput="ngModel"
-      required email
+      placeholder="Your Full Name"
+      #name="ngModel"
+
       >
-      <mat-error *ngIf="emailInput.invalid">Please enter a valid email.</mat-error>
+      <mat-error *ngIf="name.invalid">Please enter a valid name.</mat-error>
     </mat-form-field>
+
+    <mat-form-field>
+      <input
+      matInput
+      placeholder="Username (enter name)"
+      type="text"
+      name="username"
+      disabled
+      ngModel
+      #username="ngModel"
+      > {{ generatedName }}
+    </mat-form-field>
+
+
+   <mat-form-field>
+      <mat-label>Select User Type</mat-label>
+      <mat-select
+
+      [(ngModel)]="userType"
+      name = "userType"
+
+      >
+        <mat-option *ngFor="let userType of userTypes" [value]="userType.value">
+          {{userType.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+
 
     <mat-form-field>
       <input
@@ -28,7 +58,7 @@
       ngModel
       placeholder="Password"
       #passwordInput="ngModel"
-      required
+
       >
       <mat-error *ngIf="passwordInput.invalid">Please enter a valid password.</mat-error>
     </mat-form-field>

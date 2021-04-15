@@ -4,12 +4,25 @@ import { Subscription } from "rxjs";
 
 import { AuthService } from "../auth.service";
 
+
+interface UserType {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponment implements OnInit, OnDestroy {
   isLoading = false;
+
+  userTypes: UserType[] = [
+    {value: 'Gov', viewValue: 'Governing Body'},
+    {value: 'League', viewValue: 'League'},
+    {value: 'Club', viewValue: 'Club'}
+  ];
+
 
   private authStatusSub: Subscription;
 
@@ -24,12 +37,12 @@ export class SignupComponment implements OnInit, OnDestroy {
   }
 
   onSignup(form: NgForm) {
-    //console.log(form.value);
+    console.log(form.value);
     if (form.invalid) {
       return;
     }
-    this.isLoading = true;
-    this.authService.createUser(form.value.email, form.value.password);
+    //this.isLoading = true;
+    //this.authService.createUser(form.value.email, form.value.password);
 
     // .subscribe(response => {
     //   console.log(response);

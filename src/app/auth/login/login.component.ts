@@ -12,6 +12,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   private authStatusSub: Subscription;
 
+
+
   constructor(public authService: AuthService) {}
 
   ngOnInit() {
@@ -28,7 +30,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
     this.isLoading = true;
-    this.authService.loginUser(form.value.email, form.value.password)
+    //this.authService.loginUser(form.value.email, form.value.password)
   }
 
   ngOnDestroy() {

@@ -40,8 +40,8 @@ export class AuthService {
   }
 
 
-  createUser(email: string, password: string) {
-    const authData: AuthData = {email: email, password: password};
+  createUser(username: string, userType: string, role: string, name: string, dob: Date, club: string, team: string, password: string) {
+    const authData: AuthData = {username: username, userType: userType, role: role, name: name, dob: dob, club: club, team: team, password: password };
     this.httpClient
       .post(BACKEND_URL + "/signup", authData)
       .subscribe(response => {
@@ -57,8 +57,8 @@ export class AuthService {
 
   }
 
-  loginUser(email: string, password: string) {
-    const authData: AuthData = {email: email, password: password};
+  loginUser(username: string, userType: string, role: string, name: string, dob: Date, club: string, team: string, password: string) {
+    const authData: AuthData = {username: username, userType: userType, role: role, name: name, dob: dob, club: club, team: team, password: password};
     this.httpClient
       .post<{ token: string, expiresIn: number, userId: string }>(BACKEND_URL + "/login", authData)
       .subscribe(response => {
