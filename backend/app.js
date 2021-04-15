@@ -60,12 +60,12 @@ app.use((req, res, next) => {
 app.use("/api/posts", postsRoutes);
 app.use("/api/user", userRoutes);
 
-//app.use("", express.static(path.join(__dirname, "../dist/mean-course")));
+app.use("/", express.static(path.join(__dirname, "../dist/football-cms")));
 // app.use("/", express.static(path.join(__dirname, "angular")));
-// app.use((req, res, next) => {
-//   //res.sendFile(path.join(__dirname, "../dist/mean-course/index.html"));
-//   res.sendFile(path.join(__dirname,"angular", "index.html"));
-// });
+app.use((req, res, next) => {
+  res.sendFile(path.join(__dirname, "../dist/football-cms/index.html"));
+  //res.sendFile(path.join(__dirname,"angular", "index.html"));
+});
 
 
 
