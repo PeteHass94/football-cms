@@ -20,8 +20,8 @@ router.post("", checkAuth,
  PostController.createPost
  );
 
-//USE/GET
-router.get('', PostController.getPosts);
+//USE/GET all
+router.get("", PostController.getPosts);
 
 //UPDATE
 router.put(

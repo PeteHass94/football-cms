@@ -34,6 +34,7 @@ export class PostsService {
       .get<{message: string, posts: any, maxPosts: number }>( BACKEND_URL + queryParams)
       .pipe(
         map((postData) => {
+            //console.log(postData);
               return {
                 posts: postData.posts.map(post => {
                 return {

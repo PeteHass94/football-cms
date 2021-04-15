@@ -82,7 +82,7 @@ exports.getPosts = (req, res, next) => {
   postQuery
     .then((documents) => {
       fetchedPosts = documents;
-      return Post.count();
+      return Post.countDocuments();//.count();
       //console.log(documents);
 
     })
@@ -102,6 +102,7 @@ exports.getPosts = (req, res, next) => {
 
 exports.getPost = (req, res, next) => {
   Post.findById(req.params.id).then(post => {
+    console.log(post);
     if(post) {
       res.status(200).json(post);
     }
