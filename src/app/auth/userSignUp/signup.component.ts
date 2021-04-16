@@ -9,6 +9,19 @@ interface UserType {
   value: string;
   viewValue: string;
 }
+interface Role {
+  value: string;
+  viewValue: string;
+}
+interface Club {
+  value: string;
+  viewValue: string;
+}
+interface Team  {
+  value: string;
+  viewValue: string;
+}
+
 
 @Component({
   templateUrl: './signup.component.html',
@@ -23,6 +36,21 @@ export class SignupComponment implements OnInit, OnDestroy {
     {value: 'Club', viewValue: 'Club'}
   ];
 
+  roles: Role[] = [
+    {value: 'Na', viewValue: 'Na'},
+    {value: 'Admin', viewValue: 'Admin'},
+    {value: 'Manager', viewValue: 'Manager'},
+    {value: 'Coach', viewValue: 'Coach'},
+    {value: 'Player', viewValue: 'Player'}
+  ];
+
+  clubs: Role[] = [
+    {value: 'Na', viewValue: 'Na'}
+  ];
+
+  teams: Role[] = [
+    {value: 'Na', viewValue: 'Na'}
+  ];
 
   private authStatusSub: Subscription;
 

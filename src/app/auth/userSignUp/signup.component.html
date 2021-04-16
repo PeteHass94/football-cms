@@ -47,7 +47,60 @@
       </mat-select>
     </mat-form-field>
 
+    <mat-form-field>
+      <mat-label>Select Role</mat-label>
+      <mat-select
 
+      [(ngModel)]="role"
+      name = "role"
+
+      >
+        <mat-option *ngFor="let role of roles" [value]="role.value">
+          {{role.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+    <mat-form-field>
+      <mat-label>Select dob</mat-label>
+      <input
+      matInput
+      [matDatepicker]="picker"
+      [(ngModel)]="dob"
+      name = "dob"
+      >
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Select Club</mat-label>
+      <mat-select
+
+      [(ngModel)]="club"
+      name = "club"
+
+      >
+        <mat-option *ngFor="let club of clubs" [value]="club.value">
+          {{club.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Select Team</mat-label>
+      <mat-select
+
+      [(ngModel)]="team"
+      name = "team"
+
+      >
+        <mat-option *ngFor="let team of teams" [value]="team.value">
+          {{team.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
 
     <mat-form-field>
