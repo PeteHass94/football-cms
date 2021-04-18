@@ -7,7 +7,7 @@ import { AngularMaterialModule } from "../angular-material.module";
 
 //posts
 import { PostCreateComponent } from './post-create/post-create.component';
-import { PostListComponent } from './post-list/post-list.component'
+import { PostListComponent } from './post-list/post-list.component';
 
 
 

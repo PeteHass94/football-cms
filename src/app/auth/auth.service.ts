@@ -94,6 +94,20 @@ export class AuthService {
       username: username, password: password}
     this.createUser(authData);
   }
+  //Player creation
+  createPlayerUser(
+    userType: string,
+    role: string,
+    name: string,
+    username: string,
+    club: string,
+    dob: Date,
+    password: string
+    ){
+    const authData: AuthDataPlayer = {
+      userType: userType, role: role, name: name, club: club, dob: dob, username: username, password: password}
+    this.createUser(authData);
+  }
 
   createUser(authData: any){
     this.httpClient
@@ -186,7 +200,8 @@ export class AuthService {
 
 
   private saveAuthData(token: string, expirationDate: Date, userId: string, user: AuthData) {
-    console.log(user);
+    console.log(user.dob);
+    let userDOB = user.dob.toString();
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());
     localStorage.setItem('userId', userId);
@@ -200,7 +215,7 @@ export class AuthService {
     localStorage.setItem('club', user.club);
     localStorage.setItem('team', user.team);
     if(user.dob)
-      localStorage.setItem('dob', user.dob.toISOString());
+      localStorage.setItem('dob', userDOB.substring(0,4));
     else
       localStorage.setItem('dob', undefined);
   }
@@ -266,11 +281,21 @@ export class AuthService {
   //     }>(BACKEND_URL + id);
   // }
 
+  private clubs: JSON;
+
   getAllClubs(){
-    return this.httpClient
-         .get<{
-          _id: string
-        }>(BACKEND_URL + "teams");
+    const clubsQuery =
+    this.httpClient
+      .get<{ message: string, noClubs: number, clubs: JSON}>(BACKEND_URL + "/clubs" );
+
+    //console.log(BACKEND_URL + "/clubs");
+    // //console.log(clubsQuery);
+
+    // clubsQuery.subscribe((transformedClubData) => {
+    //   this.clubs = transformedClubData.clubs
+    //   console.log(this.clubs);
+    // });
+    return clubsQuery;
   }
 
 

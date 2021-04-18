@@ -16,7 +16,8 @@
     </li>
   </ul>
 </mat-toolbar>
-<mat-toolbar *ngIf="userIsAuthenticated" class="userInfo" color="accent">
+<mat-spinner *ngIf="userIsAuthenticated && isLoading"></mat-spinner>
+<mat-toolbar *ngIf="userIsAuthenticated && !isLoading" class="userInfo" color="accent">
   <span class="userInfoHeading"><strong> My Information </strong></span>
   <span class="userInfoContent">
     <!-- <mat-divider [vertical]="true"></mat-divider> -->

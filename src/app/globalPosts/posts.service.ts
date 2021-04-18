@@ -17,18 +17,11 @@ export class PostsService {
 
   constructor(private httpClient: HttpClient, private router: Router) {}
 
-
-
   // private apiUrl = 'http://localhost:3000/api/posts';
 
   getPosts(postsPerPage: number, currentPage: number) {
-    //return [...this.posts];
-    //return this.posts;
-    const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
 
-    // this.httpClient.get<{message: string, posts: any[]}>(this.apiUrl, {
-    //   params: new HttpParams().set('pagesize', postsPerPage.toString())
-    //     .append('page', currentPage.toString())
+    const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
 
     this.httpClient
       .get<{message: string, posts: any, maxPosts: number }>( BACKEND_URL + queryParams)

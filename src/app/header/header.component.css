@@ -17,6 +17,10 @@ ul {
   flex: 1 1 auto;
 }
 
+mat-spinner {
+  margin: auto;
+}
+
 .userInfo {
   text-align: center;
   display: flex;

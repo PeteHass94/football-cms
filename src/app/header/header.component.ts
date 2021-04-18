@@ -10,6 +10,7 @@ import { AuthService } from "../auth/auth.service";
 })
 export class HeaderComponent implements OnInit, OnDestroy{
   userIsAuthenticated = false;
+  isLoading = false;
   private authListenerSubs: Subscription;
 
 
@@ -22,11 +23,13 @@ export class HeaderComponent implements OnInit, OnDestroy{
 
 
   ngOnInit() {
+    this.isLoading = true;
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authListenerSubs = this.authService
     .getAuthStatusListener()
     .subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated;
+      this.isLoading = false;
     });
     //console.log(this.user);
     //console.log(this.user.club);

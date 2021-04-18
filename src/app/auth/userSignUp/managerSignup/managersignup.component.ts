@@ -4,6 +4,11 @@ import { Subscription } from 'rxjs';
 
 import { AuthService } from "../../auth.service";
 
+interface Club {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-manager-signup',
   templateUrl: './managersignup.component.html',
@@ -28,9 +33,15 @@ export class ManagerSignupComponent implements OnInit, OnDestroy{
   });
 
 
+  clubsJSON: JSON;
+  clubs: Club[] = [
+    {value: 'Na', viewValue: 'Na'}
+  ];
 
   ngOnInit() {
-    this.authStatusSub = this.authService.getAuthStatusListener().subscribe(
+    this.authStatusSub = this.authService
+    .getAuthStatusListener()
+    .subscribe(
       authStatus => {
         this.isLoading = false;
       }
@@ -39,6 +50,7 @@ export class ManagerSignupComponent implements OnInit, OnDestroy{
     let useRole = "";
     let useName = "";
     let useClub = "";
+    let useTeam = "";
 
     this.managerUserForm.valueChanges
     .subscribe(x => {
@@ -49,12 +61,25 @@ export class ManagerSignupComponent implements OnInit, OnDestroy{
         useRole = this.managerUserForm.get("role").value;
       useName = this.managerUserForm.get("name").value.replace(/\s/g, "");
       useClub = this.managerUserForm.get("club").value.replace(/\s/g, "");
-      newUsername = (useClub + useRole + useName).toLowerCase();
+      useTeam = this.managerUserForm.get("team").value.replace(/\s/g, "");
+      newUsername = (useClub + useTeam + "manager" +useRole + useName).toLowerCase();
       if(!this.usernameFocus)
         this.managerUserForm.get("username").setValue(newUsername, { emitEvent: false });
     });
 
-    //console.log(this.authService.getAllClubs());
+    this.authService.getAllClubs().subscribe(
+      (transformedClubData) => {
+        this.clubsJSON = transformedClubData.clubs;
+        //console.log(this.clubsJSON);
+        for (let element in this.clubsJSON) {
+          this.clubs.push({
+              viewValue: this.clubsJSON[element],
+              value: this.clubsJSON[element]
+          });
+      }
+      });
+
+
   }
 
   usernameFocus = false;

@@ -10,6 +10,7 @@ router.post("/signup", UserController.createUser);
 //login user
 router.post("/login", UserController.userLogin);
 
-router.get("/teams", UserController.getUserTeams);
+//get userteams
+router.get("/clubs", UserController.getUserClubs);
 
 module.exports = router;

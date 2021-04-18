@@ -6,7 +6,7 @@ const User = require("../models/user");
 
 //create user /signup
 exports.createUser = (req, res, next) => {
-  console.log(req.body);
+  //console.log(req.body);
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
       const user = new User({
@@ -40,7 +40,7 @@ exports.createUser = (req, res, next) => {
 //user login /login
 exports.userLogin = (req, res, next) => {
   let fetchedUser;
-  //console.log(User.find());
+  //console.log(User.find().select('club'));
   User.findOne( {username: req.body.username } )
     .then(user => {
       //console.log(user);
@@ -88,10 +88,30 @@ exports.userLogin = (req, res, next) => {
     });
 }
 
-exports.getUserTeams = (req,res,next) => {
+exports.getUserClubs = (req,res,next) => {
+  const usersQuery = User.find({userType: "club"});
+  let userMap = {};
+  let i =0;
 
-  User.find().distinct('team', function (error, teams) {
-    console.log(teams);
+  usersQuery.then((documents) => {
+    documents.forEach(function(user) {
+      userMap[i] = user.club;
+      i++;
+    });
+    return usersQuery.countDocuments();
+  })
+  .then(count => {
+    //console.log(count);
+    res.status(200).json({
+      message: 'Users fetched successfully',
+      noClubs: count,
+      clubs: userMap
+    });
+  })
+  .catch(error => {
+    res.status(500).json({
+      message: "Fetching users failed!"
+    });
   });
 }
 
