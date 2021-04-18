@@ -16,21 +16,25 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(public authService: AuthService) {}
 
+
   ngOnInit() {
     this.authStatusSub = this.authService.getAuthStatusListener().subscribe(
       authStatus => {
         this.isLoading = false;
       }
     );
+
   }
 
   onLogin(form: NgForm) {
     //console.log(form.value);
-    if (form.invalid) {
-      return;
-    }
+    // if (form.invalid) {
+    //   return;
+    // }
     this.isLoading = true;
-    this.authService.loginUser(form.value.username, form.value.password)
+    form.value.username = "club";
+    form.value.password = "password";
+    this.authService.loginUser(form.value.username.toLowerCase(), form.value.password);
   }
 
   ngOnDestroy() {

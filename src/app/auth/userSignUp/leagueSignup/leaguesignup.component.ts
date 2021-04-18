@@ -47,11 +47,31 @@ export class LeagueSignupComponent implements OnInit, OnDestroy{
       useName = this.leagueUserForm.get("name").value.replace(/\s/g, "");
       useLeague = this.leagueUserForm.get("league").value.replace(/\s/g, "");
       newUsername = (useLeague + useRole + useName).toLowerCase();
-      this.leagueUserForm.get("username").setValue(newUsername, { emitEvent: false });
+      if(!this.usernameFocus)
+        this.leagueUserForm.get("username").setValue(newUsername, { emitEvent: false });
     });
   }
 
+  usernameFocus = false;
+  onUsernameFocus() {
+    this.usernameFocus = true;
+    this.leagueUserForm.get("username").valueChanges
+    .subscribe(x => {
+      // console.log(x);
+      let value = this.leagueUserForm.get("username").value.replace(/\s/g, "");
+      this.leagueUserForm.get("username").setValue(value, { emitEvent: false });
+    });
+  }
 
+  onUsernameBlur() {
+    this.leagueUserForm.get("username").valueChanges
+    .subscribe(x => {
+      // console.log(x);
+      let value = this.leagueUserForm.get("username").value.replace(/\s/g, "");
+      this.leagueUserForm.get("username").setValue(value, { emitEvent: false });
+    });
+    this.usernameFocus = false;
+  }
 
 
   onSubmit() {
@@ -62,7 +82,7 @@ export class LeagueSignupComponent implements OnInit, OnDestroy{
       this.leagueUserForm.get("userType").value,
       this.leagueUserForm.get("role").value,
       this.leagueUserForm.get("name").value,
-      this.leagueUserForm.get("username").value,
+      this.leagueUserForm.get("username").value.toLowerCase(),
       this.leagueUserForm.get("league").value,
       this.leagueUserForm.get("password").value
 

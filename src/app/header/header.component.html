@@ -1,5 +1,5 @@
 <mat-toolbar color ="primary">
-  <span><a routerLink="/">MyMessages</a></span>
+  <span><a routerLink="/">FYP Football CMS</a></span>
   <span class="spacer"></span>
   <ul>
     <li *ngIf="userIsAuthenticated">
@@ -15,4 +15,29 @@
       <button mat-button (click)="onLogout()">Logout</button>
     </li>
   </ul>
+</mat-toolbar>
+<mat-toolbar *ngIf="userIsAuthenticated" class="userInfo" color="accent">
+  <span class="userInfoHeading"><strong> My Information </strong></span>
+  <span class="userInfoContent">
+    <!-- <mat-divider [vertical]="true"></mat-divider> -->
+    Username: {{user.username}}<mat-divider [vertical]="true"></mat-divider>
+    UserType: {{user.userType}}<mat-divider [vertical]="true"></mat-divider>
+    Role: {{user.role}}<mat-divider [vertical]="true"></mat-divider>
+    Name: {{user.name}}
+    <mat-divider [vertical]="true"></mat-divider>
+    <span *ngIf="user.league != 'undefined'">
+      League: {{user.league}}<mat-divider [vertical]="true"></mat-divider>
+    </span>
+    <span *ngIf="user.club != 'undefined'">
+      Club: {{user.club}}<mat-divider [vertical]="true"></mat-divider>
+    </span>
+    <span *ngIf="user.team != 'undefined'">
+      Team: {{user.team}}<mat-divider [vertical]="true"></mat-divider>
+    </span>
+    <span *ngIf="!user.dob || user.dob != 'undefined'">
+      Dob: {{user.dob}}<mat-divider [vertical]="true"></mat-divider>
+    </span>
+
+
+  </span>
 </mat-toolbar>

@@ -1,1 +1,80 @@
-club
+<h1>Club Signup</h1>
+<mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form
+  [formGroup]="clubUserForm"
+  *ngIf="!isLoading"
+  (ngSubmit)="onSubmit()"
+  >
+
+    <mat-form-field>
+      <input
+      matInput
+      type="text"
+      name="role"
+
+      placeholder="Your Role"
+      formControlName="role"
+      >
+      <mat-error *ngIf="clubUserForm.role?.invalid">Please enter a valid role.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+      matInput
+      type="text"
+      name="name"
+
+      placeholder="Your Full Name"
+      formControlName="name"
+
+      >
+      <mat-error *ngIf="clubUserForm.name?.invalid">Please enter a valid name.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+      matInput
+      type="text"
+      name="club"
+
+      placeholder="Your Club Name"
+      formControlName="club"
+
+      >
+      <mat-error *ngIf="clubUserForm.club?.invalid">Please enter a valid name.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+      matInput
+      type="text"
+      name="username"
+
+      placeholder="Your Username"
+      formControlName="username"
+
+      (focus)="onUsernameFocus()"
+      (blur)="onUsernameBlur()"
+      >
+      <mat-error *ngIf="clubUserForm.username?.invalid">Please enter a valid username.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+      matInput
+      type="password"
+      name="password"
+
+      placeholder="Password"
+      formControlName="password"
+      >
+      <mat-error *ngIf="clubUserForm.name?.invalid">Please enter a valid password.</mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">
+      Signup
+    </button>
+
+  </form>
+</mat-card>

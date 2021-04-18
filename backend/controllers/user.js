@@ -60,7 +60,6 @@ exports.userLogin = (req, res, next) => {
 
     .then(result => {
       //if password is wrong
-
       if (!result ) {
         return res.status(401).json({
           message: "Password Auth failed"
@@ -77,9 +76,9 @@ exports.userLogin = (req, res, next) => {
         token: token,
         message: "Auth Success",
         expiresIn: 3600,
-        userId: fetchedUser._id
+        userId: fetchedUser._id,
+        user: fetchedUser
       });
-
     })
 
     .catch(err => {
@@ -88,3 +87,41 @@ exports.userLogin = (req, res, next) => {
         });
     });
 }
+
+exports.getUserTeams = (req,res,next) => {
+
+  User.find().distinct('team', function (error, teams) {
+    console.log(teams);
+  });
+}
+
+// exports.getUser = (req,res,next) => {
+//   User.findById(req.params.id).then(user => {
+//     console.log(user);
+//     if(post) {
+//       res.status(200).json(post);
+
+//     }
+
+//   })
+
+// }
+
+
+// exports.getPost = (req, res, next) => {
+//   Post.findById(req.params.id).then(post => {
+//     console.log(post);
+//     if(post) {
+//       res.status(200).json(post);
+//     }
+//     else {
+//       res.status(404).json({message: 'Post not found!'});
+//     }
+//   })
+//   .catch(error => {
+//     res.status(500).json({
+//       message: "Fetching posts failed!"
+//     });
+//   });
+
+// }

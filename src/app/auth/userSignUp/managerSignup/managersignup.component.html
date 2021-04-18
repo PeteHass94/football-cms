@@ -1,1 +1,95 @@
 manager
+<h1>Manager Signup</h1>
+<mat-card>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form
+  [formGroup]="managerUserForm"
+  *ngIf="!isLoading"
+  (ngSubmit)="onSubmit()"
+  >
+
+    <mat-form-field>
+      <input
+      matInput
+      type="text"
+      name="role"
+
+      placeholder="Your Role"
+      formControlName="role"
+      >
+      <mat-error *ngIf="managerUserForm.role?.invalid">Please enter a valid role.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+      matInput
+      type="text"
+      name="name"
+
+      placeholder="Your Full Name"
+      formControlName="name"
+
+      >
+      <mat-error *ngIf="managerUserForm.name?.invalid">Please enter a valid name.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Select User Type</mat-label>
+      <mat-select
+
+      formControlName="club"
+      name = "club"
+
+      >
+        <mat-option *ngFor="let club of clubs" [value]="club.value">
+          {{club.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+      matInput
+      type="text"
+      name="team"
+
+      placeholder="Your Team Name"
+      formControlName="team"
+
+      >
+      <mat-error *ngIf="managerUserForm.team?.invalid">Please enter a valid team name.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+      matInput
+      type="text"
+      name="username"
+
+      placeholder="Your Username"
+      formControlName="username"
+
+      (focus)="onUsernameFocus()"
+      (blur)="onUsernameBlur()"
+      >
+      <mat-error *ngIf="managerUserForm.username?.invalid">Please enter a valid username.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+      matInput
+      type="password"
+      name="password"
+
+      placeholder="Password"
+      formControlName="password"
+      >
+      <mat-error *ngIf="managerUserForm.name?.invalid">Please enter a valid password.</mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">
+      Signup
+    </button>
+
+  </form>
+</mat-card>

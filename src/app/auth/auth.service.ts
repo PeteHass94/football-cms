@@ -22,6 +22,8 @@ export class AuthService {
   private tokenTimer: any;
   private authStatusListener = new Subject<boolean>();
 
+  private theUser: AuthData;
+
 
   constructor(private httpClient: HttpClient, private router: Router) {}
 
@@ -41,23 +43,7 @@ export class AuthService {
     return this.userId;
   }
 
-
-  // createUser(username: string, userType: string, role: string, name: string, dob: Date, club: string, team: string, password: string) {
-  //   const authData: AuthData = {username: username, userType: userType, role: role, name: name, dob: dob, club: club, team: team, password: password };
-  //   this.httpClient
-  //     .post(BACKEND_URL + "/signup", authData)
-  //     .subscribe(response => {
-  //       //correct enter
-  //       this.router.navigate(['/auth/login']);
-  //       console.log(response);
-
-
-  //     }, error => {
-  //       //error handling
-  //       this.authStatusListener.next(false);
-  //     });
-  // }
-  //Governing body creation
+  //Govbody creation
   createGovUser(
     userType: string,
     role: string,
@@ -65,10 +51,6 @@ export class AuthService {
     username: string,
     password: string
     ){
-    // const authData: AuthData = {
-    //   userType: userType, role: role, name: name, username: username, password: password,
-    //   league: null, club: null, team: null, dob: null
-    // }
     const authData: AuthDataGov = { userType: userType, role: role, name: name, username: username, password: password }
     this.createUser(authData);
   }
@@ -81,11 +63,35 @@ export class AuthService {
     league: string,
     password: string
     ){
-    // const authData: AuthData = {
-    //   userType: userType, role: role, name: name, username: username, password: password,
-    //   league: league, club: null, team: null, dob: null
-    // }
     const authData: AuthDataLeague = { userType: userType, role: role, name: name, league: league, username: username, password: password}
+    this.createUser(authData);
+  }
+
+  //Club creation
+  createClubUser(
+    userType: string,
+    role: string,
+    name: string,
+    username: string,
+    club: string,
+    password: string
+    ){
+    const authData: AuthDataClub = { userType: userType, role: role, name: name, club: club, username: username, password: password}
+    this.createUser(authData);
+  }
+  //Manager creation
+  createManagerUser(
+    userType: string,
+    role: string,
+    name: string,
+    username: string,
+    club: string,
+    team: string,
+    password: string
+    ){
+    const authData: AuthDataManager = {
+      userType: userType, role: role, name: name, club: club, team: team,
+      username: username, password: password}
     this.createUser(authData);
   }
 
@@ -106,7 +112,7 @@ export class AuthService {
   loginUser(username: string, password: string) {
     const authData: AuthDataLogin = {username: username, password: password};
     this.httpClient
-      .post<{ token: string, expiresIn: number, userId: string }>(BACKEND_URL + "/login", authData)
+      .post<{ token: string, expiresIn: number, userId: string, user: any }>(BACKEND_URL + "/login", authData)
       .subscribe(response => {
         //console.log(response);
         const token = response.token;
@@ -115,6 +121,7 @@ export class AuthService {
           const expiresInDuration = response.expiresIn;
 
           this.userId = response.userId;
+          this.theUser = response.user;
 
           this.setAuthTimer(expiresInDuration);
           this.isAuthenticated = true;
@@ -123,12 +130,15 @@ export class AuthService {
           const now = new Date();
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
 
-          this.saveAuthData(token, expirationDate, this.userId)
+          //this.saveAuthData(token, expirationDate, this.userId);
+          this.saveAuthData(token, expirationDate, this.userId, this.theUser);
           this.router.navigate(['/']);
         }
       }, error => {
         this.authStatusListener.next(false);
       });
+
+
   }
 
   autoAuthUser() {
@@ -175,22 +185,57 @@ export class AuthService {
   }
 
 
-  private saveAuthData(token: string, expirationDate: Date, userId: string) {
+  private saveAuthData(token: string, expirationDate: Date, userId: string, user: AuthData) {
+    console.log(user);
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());
     localStorage.setItem('userId', userId);
+
+    localStorage.setItem('username', user.username);
+    localStorage.setItem('userType', user.userType);
+    localStorage.setItem('role', user.role);
+    localStorage.setItem('name', user.name);
+
+    localStorage.setItem('league', user.league);
+    localStorage.setItem('club', user.club);
+    localStorage.setItem('team', user.team);
+    if(user.dob)
+      localStorage.setItem('dob', user.dob.toISOString());
+    else
+      localStorage.setItem('dob', undefined);
   }
 
   private clearAuthData() {
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
     localStorage.removeItem('userId');
+
+    localStorage.removeItem('username');
+    localStorage.removeItem('userType');
+    localStorage.removeItem('role');
+    localStorage.removeItem('name');
+
+    localStorage.removeItem('league');
+    localStorage.removeItem('club');
+    localStorage.removeItem('team');
+    localStorage.removeItem('dob');
   }
 
-  private getAuthData() {
+  getAuthData() {
     const token = localStorage.getItem('token');
     const expirationDate = localStorage.getItem('expiration');
     const userId = localStorage.getItem('userId');
+
+    const username = localStorage.getItem('username');
+    const userType = localStorage.getItem('userType');
+    const role = localStorage.getItem('role');
+    const name = localStorage.getItem('name');
+
+    const league = localStorage.getItem('league');
+    const club = localStorage.getItem('club');
+    const team = localStorage.getItem('team');
+    const dob = localStorage.getItem('dob');
+
 
     if (!token || !expirationDate) {
       return;
@@ -199,8 +244,34 @@ export class AuthService {
     return {
       token: token,
       expirationDate: new Date(expirationDate),
-      userId: userId
+      userId: userId,
+
+      username: username,
+      userType: userType,
+      role: role,
+      name: name,
+
+      league: league,
+      club: club,
+      team: team,
+      dob: dob
     }
   }
+
+  // getUserData(id: string) {
+  //   //return{...this.posts.find(p => p.id === id)};
+  //   return this.httpClient
+  //     .get<{
+  //       _id: string
+  //     }>(BACKEND_URL + id);
+  // }
+
+  getAllClubs(){
+    return this.httpClient
+         .get<{
+          _id: string
+        }>(BACKEND_URL + "teams");
+  }
+
 
 }

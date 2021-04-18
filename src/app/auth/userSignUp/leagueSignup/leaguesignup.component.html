@@ -42,7 +42,7 @@
       formControlName="league"
 
       >
-      <mat-error *ngIf="leagueUserForm.name?.invalid">Please enter a valid name.</mat-error>
+      <mat-error *ngIf="leagueUserForm.league?.invalid">Please enter a valid league name.</mat-error>
     </mat-form-field>
 
     <mat-form-field>
@@ -54,6 +54,8 @@
       placeholder="Your Username"
       formControlName="username"
 
+      (focus)="onUsernameFocus()"
+      (blur)="onUsernameBlur()"
       >
       <mat-error *ngIf="leagueUserForm.username?.invalid">Please enter a valid username.</mat-error>
     </mat-form-field>

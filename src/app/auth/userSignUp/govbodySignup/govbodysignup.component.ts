@@ -46,28 +46,30 @@ export class GovbodySignupComponent implements OnInit, OnDestroy{
         newUsername = ("gov" + useRole + useName).toLowerCase();
         if(!this.usernameFocus)
           this.govbodyUserForm.get("username").setValue(newUsername, { emitEvent: false });
-
-
       });
-
   }
+
   usernameFocus = false;
   onUsernameFocus() {
     this.usernameFocus = true;
-    this.govbodyUserForm.valueChanges
-      .subscribe(x => {
-        let value = this.govbodyUserForm.get("username").value;
-        this.govbodyUserForm.get("username").setValue(value, { emitEvent: false });
+    this.govbodyUserForm.get("username").valueChanges
+    .subscribe(x => {
+      // console.log(x);
+      let value = this.govbodyUserForm.get("username").value.replace(/\s/g, "");
+      this.govbodyUserForm.get("username").setValue(value, { emitEvent: false });
     });
   }
 
   onUsernameBlur() {
-    this.govbodyUserForm.valueChanges
-      .subscribe(x => {
-        console.log(x);
-        let value = this.govbodyUserForm.get("username").value;
-        this.govbodyUserForm.get("username").setValue(value, { emitEvent: false });
+    this.govbodyUserForm.get("username").valueChanges
+    .subscribe(x => {
+      // console.log(x);
+      let value = this.govbodyUserForm.get("username").value.replace(/\s/g, "");
+      this.govbodyUserForm.get("username").setValue(value, { emitEvent: false });
     });
+
+    this.usernameFocus = false;
+
   }
 
 
@@ -81,7 +83,7 @@ export class GovbodySignupComponent implements OnInit, OnDestroy{
       this.govbodyUserForm.get("userType").value,
       this.govbodyUserForm.get("role").value,
       this.govbodyUserForm.get("name").value,
-      this.govbodyUserForm.get("username").value,
+      this.govbodyUserForm.get("username").value.toLowerCase(),
       this.govbodyUserForm.get("password").value
 
     );

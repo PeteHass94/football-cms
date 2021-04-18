@@ -17,3 +17,23 @@ ul {
   flex: 1 1 auto;
 }
 
+.userInfo {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+span.userInfoHeading{
+  margin: auto 1em;
+}
+
+span.userInfoContent {
+  display: flex;
+  flex-direction: row;
+}
+
+span.userInfoContent mat-divider {
+  border-right-width: 5px;
+  margin-right: 0.25em;
+  margin-left: 0.25em;
+}
