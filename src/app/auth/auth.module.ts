@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AngularMaterialModule } from "../angular-material.module";
 
@@ -8,18 +9,21 @@ import { AngularMaterialModule } from "../angular-material.module";
 import { AuthRoutingModule } from "./auth-routing.module";
 
 import { LoginComponent } from "./login/login.component";
-import { SignupComponment } from "./userSignUp/signup.component";
+
+import { SignupModule } from "./userSignUp/signup.module";
 
 @NgModule({
   declarations: [
-    LoginComponent,
-    SignupComponment
+    LoginComponent
+
   ],
   imports: [
     CommonModule,
     AngularMaterialModule,
     FormsModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    ReactiveFormsModule,
+    SignupModule
   ]
 })
 export class AuthModule {}

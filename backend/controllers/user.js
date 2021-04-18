@@ -6,6 +6,7 @@ const User = require("../models/user");
 
 //create user /signup
 exports.createUser = (req, res, next) => {
+  console.log(req.body);
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
       const user = new User({
@@ -15,6 +16,7 @@ exports.createUser = (req, res, next) => {
         role: req.body.role,
         name: req.body.name,
         dob: req.body.dob,
+        league: req.body.league,
         club: req.body.club,
         team: req.body.team,
         password: hash
@@ -27,13 +29,12 @@ exports.createUser = (req, res, next) => {
           });
         })
         .catch(err => {
+          console.log(err);
           res.status(500).json({
             message: "Invalid authentication credentials."
           });
         });
     });
-
-
 }
 
 //user login /login

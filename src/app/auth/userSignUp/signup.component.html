@@ -1,126 +1,46 @@
-<h1>Signup Process</h1>
-
-<mat-card>
-  <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <form action=""
-  *ngIf="!isLoading"
-  (submit)="onSignup(signupForm)"
-  #signupForm="ngForm"
-  >
-    <mat-form-field>
-      <input
-      matInput
-      type="text"
-      name="name"
-      ngModel
-      placeholder="Your Full Name"
-      #name="ngModel"
-
-      >
-      <mat-error *ngIf="name.invalid">Please enter a valid name.</mat-error>
-    </mat-form-field>
-
-    <mat-form-field>
-      <input
-      matInput
-      placeholder="Username (enter name)"
-      type="text"
-      name="username"
-      disabled
-      ngModel
-      #username="ngModel"
-      > {{ generatedName }}
-    </mat-form-field>
+<h1>Signup Forms</h1>
+<!--
+<nav>
+  <a (click)="toggleUserType('govbody')" [ngClass]="status ? 'active' : 'danger'">Governing Body Signup</a>
+  <a (click)="toggleUserType('league')" [ngClass]="status ? 'active' : 'danger'">League Signup</a>
+  <a (click)="toggleUserType('club')" [ngClass]="status ? 'active' : 'danger'">Club Signup</a>
+  <a (click)="toggleUserType('manager')" [ngClass]="status ? 'active' : 'danger'">Manager Signup</a>
+  <a (click)="toggleUserType('player')"[ngClass]="status ? 'active' : 'danger'">Player Signup</a>
+</nav>
 
 
-   <mat-form-field>
-      <mat-label>Select User Type</mat-label>
-      <mat-select
-
-      [(ngModel)]="userType"
-      name = "userType"
-
-      >
-        <mat-option *ngFor="let userType of userTypes" [value]="userType.value">
-          {{userType.viewValue}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Select Role</mat-label>
-      <mat-select
-
-      [(ngModel)]="role"
-      name = "role"
-
-      >
-        <mat-option *ngFor="let role of roles" [value]="role.value">
-          {{role.viewValue}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+<app-govbody-signup *ngIf="showGovBodySignup"></app-govbody-signup>
+<app-league-signup *ngIf="showLeagueSignup"></app-league-signup>
+<app-club-signup *ngIf="showClubSignup"></app-club-signup>
+<app-manager-signup *ngIf="showManagerSignup"></app-manager-signup>
+<app-player-signup *ngIf="showPlayerSignup"></app-player-signup>
+-->
 
 
-    <mat-form-field>
-      <mat-label>Select dob</mat-label>
-      <input
-      matInput
-      [matDatepicker]="picker"
-      [(ngModel)]="dob"
-      name = "dob"
-      >
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Select Club</mat-label>
-      <mat-select
-
-      [(ngModel)]="club"
-      name = "club"
-
-      >
-        <mat-option *ngFor="let club of clubs" [value]="club.value">
-          {{club.viewValue}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Select Team</mat-label>
-      <mat-select
-
-      [(ngModel)]="team"
-      name = "team"
-
-      >
-        <mat-option *ngFor="let team of teams" [value]="team.value">
-          {{team.viewValue}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-
-    <mat-form-field>
-      <input
-      matInput
-      type="password"
-      name="password"
-      ngModel
-      placeholder="Password"
-      #passwordInput="ngModel"
-
-      >
-      <mat-error *ngIf="passwordInput.invalid">Please enter a valid password.</mat-error>
-    </mat-form-field>
-
-
-    <hr>
-
-    <button mat-raised-button color="primary" type="submit">
-      Signup
-    </button>
-  </form>
-</mat-card>
+<mat-tab-group mat-align-tabs="center">
+  <mat-tab label="Governing Body">
+    <ng-template matTabContent>
+      <app-govbody-signup></app-govbody-signup>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="League">
+    <ng-template matTabContent>
+      <app-league-signup></app-league-signup>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Club">
+    <ng-template matTabContent>
+      <app-club-signup></app-club-signup>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Manager">
+    <ng-template matTabContent>
+      <app-manager-signup></app-manager-signup>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Player">
+    <ng-template matTabContent>
+      <app-player-signup></app-player-signup>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

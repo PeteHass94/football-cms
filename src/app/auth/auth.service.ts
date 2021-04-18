@@ -3,7 +3,9 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subject } from "rxjs";
 
-import { AuthData } from "./auth-data.model";
+import { AuthData, AuthDataLogin,
+  AuthDataGov, AuthDataLeague, AuthDataClub, AuthDataManager, AuthDataPlayer
+} from "./auth-data.model";
 
 import { environment } from "../../environments/environment.prod";
 
@@ -40,25 +42,69 @@ export class AuthService {
   }
 
 
-  createUser(username: string, userType: string, role: string, name: string, dob: Date, club: string, team: string, password: string) {
-    const authData: AuthData = {username: username, userType: userType, role: role, name: name, dob: dob, club: club, team: team, password: password };
-    this.httpClient
-      .post(BACKEND_URL + "/signup", authData)
-      .subscribe(response => {
-        //correct enter
-        this.router.navigate(['/auth/login']);
-        console.log(response);
+  // createUser(username: string, userType: string, role: string, name: string, dob: Date, club: string, team: string, password: string) {
+  //   const authData: AuthData = {username: username, userType: userType, role: role, name: name, dob: dob, club: club, team: team, password: password };
+  //   this.httpClient
+  //     .post(BACKEND_URL + "/signup", authData)
+  //     .subscribe(response => {
+  //       //correct enter
+  //       this.router.navigate(['/auth/login']);
+  //       console.log(response);
 
 
-      }, error => {
-        //error handling
-        this.authStatusListener.next(false);
-      });
-
+  //     }, error => {
+  //       //error handling
+  //       this.authStatusListener.next(false);
+  //     });
+  // }
+  //Governing body creation
+  createGovUser(
+    userType: string,
+    role: string,
+    name: string,
+    username: string,
+    password: string
+    ){
+    // const authData: AuthData = {
+    //   userType: userType, role: role, name: name, username: username, password: password,
+    //   league: null, club: null, team: null, dob: null
+    // }
+    const authData: AuthDataGov = { userType: userType, role: role, name: name, username: username, password: password }
+    this.createUser(authData);
+  }
+  //League creation
+  createLeagueUser(
+    userType: string,
+    role: string,
+    name: string,
+    username: string,
+    league: string,
+    password: string
+    ){
+    // const authData: AuthData = {
+    //   userType: userType, role: role, name: name, username: username, password: password,
+    //   league: league, club: null, team: null, dob: null
+    // }
+    const authData: AuthDataLeague = { userType: userType, role: role, name: name, league: league, username: username, password: password}
+    this.createUser(authData);
   }
 
-  loginUser(username: string, userType: string, role: string, name: string, dob: Date, club: string, team: string, password: string) {
-    const authData: AuthData = {username: username, userType: userType, role: role, name: name, dob: dob, club: club, team: team, password: password};
+  createUser(authData: any){
+    this.httpClient
+    .post(BACKEND_URL + "/signup", authData)
+    .subscribe(response => {
+      //correct enter
+      this.router.navigate(['/auth/login']);
+      console.log(response);
+
+    }, error => {
+      //error handling
+      this.authStatusListener.next(false);
+    });
+  }
+
+  loginUser(username: string, password: string) {
+    const authData: AuthDataLogin = {username: username, password: password};
     this.httpClient
       .post<{ token: string, expiresIn: number, userId: string }>(BACKEND_URL + "/login", authData)
       .subscribe(response => {
