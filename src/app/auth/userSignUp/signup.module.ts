@@ -6,7 +6,7 @@ import { ClubSignupComponent } from "./clubSignup/clubsignup.component";
 import { GovbodySignupComponent } from "./govbodySignup/govbodysignup.component";
 import { LeagueSignupComponent } from "./leagueSignup/leaguesignup.component";
 import { ManagerSignupComponent } from "./managerSignup/managersignup.component";
-import { PlayerSignupComponent } from "./playerSignup/playerSignup.component";
+import { PlayerSignupComponent } from "./playerSignup/playersignup.component";
 
 
 import { SignupComponent } from "./signup.component";
