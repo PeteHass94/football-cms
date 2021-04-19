@@ -8,6 +8,11 @@ interface Club {
   value: string;
   viewValue: string;
 }
+interface Team {
+  value: string;
+  viewValue: string;
+}
+
 
 @Component({
   selector: 'app-manager-signup',
@@ -37,6 +42,21 @@ export class ManagerSignupComponent implements OnInit, OnDestroy{
   clubs: Club[] = [
     {value: 'Na', viewValue: 'Na'}
   ];
+
+  teams: Team[] = [
+    {value: 'firsts', viewValue: 'Firsts'},
+    {value: 'seconds', viewValue: 'Seconds'},
+    {value: 'thirds', viewValue: 'Thirds'},
+    {value: 'u23s', viewValue: 'U23s'},
+    {value: 'u21s', viewValue: 'U21s'},
+    {value: 'u18s', viewValue: 'U18s'},
+    {value: 'u16s', viewValue: 'U16s'},
+    {value: 'u14s', viewValue: 'U14s'},
+    {value: 'u12s', viewValue: 'U12s'},
+    {value: 'u10s', viewValue: 'U10s'}
+  ];
+
+
 
   ngOnInit() {
     this.authStatusSub = this.authService

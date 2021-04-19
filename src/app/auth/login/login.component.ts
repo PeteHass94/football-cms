@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     //   return;
     // }
     this.isLoading = true;
-    form.value.username = "peter1994";
+    form.value.username = "league";
     form.value.password = "password";
     this.authService.loginUser(form.value.username.toLowerCase(), form.value.password);
   }

@@ -161,8 +161,13 @@ export class AuthService {
       return;
     }
     const now = new Date();
+    let expiresIn: number;
+    if(authInformation.expirationDate){
+      expiresIn = (authInformation.expirationDate.getTime() - now.getTime());
+    } else {
+      expiresIn = 0;
+    }
 
-    const expiresIn = (authInformation.expirationDate.getTime() - now.getTime());
 
     if (expiresIn > 0) {
 
@@ -200,8 +205,7 @@ export class AuthService {
 
 
   private saveAuthData(token: string, expirationDate: Date, userId: string, user: AuthData) {
-    console.log(user.dob);
-    let userDOB = user.dob.toString();
+
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());
     localStorage.setItem('userId', userId);
@@ -214,8 +218,11 @@ export class AuthService {
     localStorage.setItem('league', user.league);
     localStorage.setItem('club', user.club);
     localStorage.setItem('team', user.team);
-    if(user.dob)
+    if(user.dob) {
+      console.log(user.dob);
+      let userDOB = user.dob.toString();
       localStorage.setItem('dob', userDOB.substring(0,4));
+    }
     else
       localStorage.setItem('dob', undefined);
   }
@@ -253,7 +260,10 @@ export class AuthService {
 
 
     if (!token || !expirationDate) {
-      return;
+
+      return {
+        userType: "logout",
+      }
     }
 
     return {
@@ -295,6 +305,14 @@ export class AuthService {
     //   this.clubs = transformedClubData.clubs
     //   console.log(this.clubs);
     // });
+    return clubsQuery;
+  }
+
+  getAllTeams(){
+    const clubsQuery =
+    this.httpClient
+      .get<{ message: string, noTeams: number, teams: JSON}>(BACKEND_URL + "/teams" );
+
     return clubsQuery;
   }
 

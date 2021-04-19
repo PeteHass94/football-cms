@@ -16,8 +16,7 @@
     </li>
   </ul>
 </mat-toolbar>
-<mat-spinner *ngIf="userIsAuthenticated && isLoading"></mat-spinner>
-<mat-toolbar *ngIf="userIsAuthenticated && !isLoading" class="userInfo" color="accent">
+<mat-toolbar *ngIf="userIsAuthenticated" class="userInfo" color="accent">
   <span class="userInfoHeading"><strong> My Information </strong></span>
   <span class="userInfoContent">
     <!-- <mat-divider [vertical]="true"></mat-divider> -->
@@ -38,7 +37,12 @@
     <span *ngIf="!user.dob || user.dob != 'undefined'">
       Dob: {{user.dob}}<mat-divider [vertical]="true"></mat-divider>
     </span>
-
-
   </span>
+</mat-toolbar>
+
+<mat-toolbar *ngIf="user.userType === 'league' && userIsAuthenticated" class="leagueInfo" color="accent">
+  <span class="leagueActionsHeading"><strong> League Actions </strong></span>
+  <li *ngIf="userIsAuthenticated">
+    <a mat-button routerLink="/league/create" routerLinkActive="mat-primary" >Create League</a>
+  </li>
 </mat-toolbar>

@@ -4,13 +4,16 @@ ul {
   margin: 0;
 }
 
-a {
+a, li {
   text-decoration: none;
   color: white;
 }
 
 ul {
   display: flex;
+}
+li {
+  list-style: none;
 }
 
 .spacer {
@@ -41,3 +44,20 @@ span.userInfoContent mat-divider {
   margin-right: 0.25em;
   margin-left: 0.25em;
 }
+
+
+/*league */
+.leagueInfo {
+  color: black;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+.leagueInfo li a {
+  color: black;
+}
+.leagueInfo li {
+  border-style: solid;
+  margin: auto 0.25em;
+}
+

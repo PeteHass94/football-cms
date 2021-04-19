@@ -21,7 +21,10 @@ export class ErrorInterceptor implements HttpInterceptor {
         //alert(error.error.error.message);
         let errorMessage = "An unknown error occured";
 
-        if (error.error.message) {
+        if (error.message) {
+          errorMessage = error.message;
+        }
+        else if (error.error.message) {
           errorMessage = error.error.message;
         }
         else if (error.error.error.message) {

@@ -35,10 +35,8 @@
     <mat-form-field>
       <mat-label>Select Club Name Type</mat-label>
       <mat-select
-
       formControlName="club"
       name = "club"
-
       >
         <mat-option *ngFor="let club of clubs" [value]="club.value">
           {{club.viewValue}}
@@ -46,7 +44,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field>
+  <!--  <mat-form-field>
       <input
       matInput
       type="text"
@@ -57,6 +55,18 @@
 
       >
       <mat-error *ngIf="managerUserForm.team?.invalid">Please enter a valid team name.</mat-error>
+    </mat-form-field> -->
+
+    <mat-form-field>
+      <mat-label>Select Team Name</mat-label>
+      <mat-select
+      formControlName="team"
+      name = "team"
+      >
+        <mat-option *ngFor="let team of teams" [value]="team.value">
+          {{ team.viewValue }}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field>

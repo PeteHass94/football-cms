@@ -21,6 +21,8 @@ import { AngularMaterialModule } from './angular-material.module';
   //posts
 import { PostsModule } from './globalPosts/posts.module';
 
+//league
+import { LeagueModule } from './league/league.module';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,8 @@ import { PostsModule } from './globalPosts/posts.module';
     HttpClientModule,
 
     AngularMaterialModule,
-    PostsModule
+    PostsModule,
+    LeagueModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

@@ -88,6 +88,7 @@ exports.userLogin = (req, res, next) => {
     });
 }
 
+//get clubs
 exports.getUserClubs = (req,res,next) => {
   const usersQuery = User.find({userType: "club"});
   let userMap = {};
@@ -106,6 +107,34 @@ exports.getUserClubs = (req,res,next) => {
       message: 'Users fetched successfully',
       noClubs: count,
       clubs: userMap
+    });
+  })
+  .catch(error => {
+    res.status(500).json({
+      message: "Fetching users failed!"
+    });
+  });
+}
+
+//get teams
+exports.getUserTeams = (req,res,next) => {
+  const usersQuery = User.find({userType: "manager"});
+  let userMap = {};
+  let i =0;
+
+  usersQuery.then((documents) => {
+    documents.forEach(function(user) {
+      userMap[i] = user.team;
+      i++;
+    });
+    return usersQuery.countDocuments();
+  })
+  .then(count => {
+    //console.log(count);
+    res.status(200).json({
+      message: 'Users fetched successfully',
+      noTeams: count,
+      teams: userMap
     });
   })
   .catch(error => {
