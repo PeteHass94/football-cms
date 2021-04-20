@@ -46,10 +46,13 @@ league create
           formControlName="teamName"
           name = "teamName"
           >
-            <mat-option *ngFor="let team of teams" [value]="team.value">
+            <mat-option *ngFor="let team of teams"
+              [value]="team.value"
+              [ngValue]="teams[0].value">
               {{team.viewValue}}
             </mat-option>
-          </mat-select>
+          <!--     [disabled]="selectedClub(i,teamsList[i].club)" > -->
+        </mat-select>
         </mat-form-field>
 
 

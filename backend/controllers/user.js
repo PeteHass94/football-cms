@@ -2,11 +2,17 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
+const Club = require("../models/club");
+const router = require("../routes/user");
+const ClubController = require("./club");
 
 
 //create user /signup
 exports.createUser = (req, res, next) => {
   //console.log(req.body);
+  let newUser;
+  let newClub;
+  let json_response = [];
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
       const user = new User({
@@ -20,22 +26,105 @@ exports.createUser = (req, res, next) => {
         club: req.body.club,
         team: req.body.team,
         password: hash
-      });
+      })
+      //console.log("new user");
+      //console.log(user._id);
+      newUser = user;
+
       user.save()
-        .then(result => {
-          res.status(201).json({
-            message: 'User Created!',
-            result: result
+        .then(user => {
+          json_response.push({
+            user: user
           });
         })
+        .then(() => {
+          if(newUser.userType == "club") {
+            //console.log(this.createClub)
+            //createClub(newUser, res);
+            const club = new Club({
+              creator: newUser._id,
+              clubName: newUser.club
+            });
+            newClub = club;
+            club.save()
+              .then(club => {
+                json_response.push({
+                  club: club
+                });
+              })
+              .then(() => {
+                createUser401(json_response, res);
+              });
+          }
+        })
+        //then option
         .catch(err => {
-          console.log(err);
-          res.status(500).json({
-            message: "Invalid authentication credentials."
-          });
+            console.log(err);
+            res.status(500).json({
+              message: "Invalid authentication credentials."
+            });
         });
+
+        // .then(result => {
+        //   res.status(201).json({
+        //     message: 'User Created!',
+        //     result: result
+        //   });
+        // })
+        // .catch(err => {
+        //   console.log(err);
+        //   res.status(500).json({
+        //     message: "Invalid authentication credentials."
+        //   });
+        // });
     });
-}
+
+
+
+    console.log("end user creation");
+
+
+  }
+
+  function createUser401(json_response, res) {
+    json_response.push({
+      message:'User Created!'
+    });
+    console.log(json_response);
+    res.status(201).json(json_response);
+  }
+
+
+
+//   function createClub(user, res) {
+//     console.log("star club create");
+//     //console.log(req.body);
+//     console.log(user);
+//     console.log("create club ran ");
+
+//     const club = new Club({
+//       creator: user._id,
+//       clubName: user.club
+//     });
+
+//     club.save()
+//     .then(createdClub => {
+//       console.log(createdClub);
+//       res.status(201).push({
+//         message2: "Club added successfully",
+//         //postId: createdPost._id
+//         club: {
+//           id: createdClub._id
+//         }
+//     });
+//   })
+//   .catch(error => {
+//     res.status(500).json({
+//       message: "Creating a post failed"
+//     });
+//   });
+
+// }
 
 //user login /login
 exports.userLogin = (req, res, next) => {

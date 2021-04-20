@@ -91,20 +91,24 @@ export class LeagueCreateComponent {//} implements OnInit, OnDestroy{
       }
       });
 
-      // this.authService.getAllTeams().subscribe(
-      //   (transformedClubData) => {
-      //     this.teamsJSON = transformedClubData.teams;
-      //     //console.log(this.teamsJSON);
-      //     for (let element in this.teamsJSON) {
-      //       this.teams.push({
-      //           viewValue: this.teamsJSON[element],
-      //           value: this.teamsJSON[element]
-      //       });
-      //   }
-      //   });
+
+
+      this.authService.getAllTeams().subscribe(
+        (transformedClubData) => {
+          this.teamsJSON = transformedClubData.teams;
+          //console.log(this.teamsJSON);
+          for (let element in this.teamsJSON) {
+            this.teams.push({
+                viewValue: this.teamsJSON[element],
+                value: this.teamsJSON[element]
+            });
+        }
+        });
   }
 
-
+  selectedClub(index: number, clubName: string) {
+    return true;
+  }
 
 
 
