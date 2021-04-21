@@ -46,3 +46,16 @@
     <a mat-button routerLink="/league/create" routerLinkActive="mat-primary" >Create League</a>
   </li>
 </mat-toolbar>
+
+<mat-toolbar *ngIf="user.userType === 'club' && userIsAuthenticated" class="clubInfo" color="warn">
+  <span class="clubActionsHeading"><strong> Club Actions </strong></span>
+  <ul *ngIf="userIsAuthenticated">
+    <li>
+      <a mat-button routerLink="/team" routerLinkActive="mat-primary">View Club</a>
+    </li>
+    <li>
+      <a mat-button routerLink="/team/create" routerLinkActive="mat-primary" >Create Team</a>
+    </li>
+  </ul>
+
+</mat-toolbar>

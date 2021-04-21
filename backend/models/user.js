@@ -10,8 +10,8 @@ const userSchema = mongoose.Schema({
   password: { type: String, required: true },
 
   dob: { type: Date },
-  league: { type: String },
-  club: { type: String },
+  league: { type: String, unique: true },
+  club: { type: String, unique: true },
   team: { type: String }
 });
 
