@@ -19,7 +19,8 @@ import { ClubViewComponent } from "./club-view/club-view.component";
     ReactiveFormsModule,
     AngularMaterialModule,
     RouterModule
+
   ]
 
 })
-export class LeagueModule {}
+export class ClubModule {}

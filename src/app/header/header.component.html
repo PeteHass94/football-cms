@@ -51,10 +51,10 @@
   <span class="clubActionsHeading"><strong> Club Actions </strong></span>
   <ul *ngIf="userIsAuthenticated">
     <li>
-      <a mat-button routerLink="/team" routerLinkActive="mat-primary">View Club</a>
+      <a mat-button [routerLink]="['/club', user.userId]" routerLinkActive="mat-primary">View Club</a>
     </li>
     <li>
-      <a mat-button routerLink="/team/create" routerLinkActive="mat-primary" >Create Team</a>
+      <a mat-button routerLink="/club/addteam" routerLinkActive="mat-primary" >Add Team</a>
     </li>
   </ul>
 

@@ -8,6 +8,9 @@ const mongoose = require('mongoose');
 const postsRoutes = require("./routes/globalPosts");
 const userRoutes = require("./routes/user");
 
+//club routes
+const clubRoutes = require("./routes/club");
+
 
 const { createShorthandPropertyAssignment } = require('typescript');
 
@@ -59,6 +62,7 @@ app.use((req, res, next) => {
 
 app.use("/api/posts", postsRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/club", clubRoutes);
 
 app.use("/", express.static(path.join(__dirname, "../dist/football-cms")));
 // app.use("/", express.static(path.join(__dirname, "angular")));

@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
 
 import { AuthService } from "../auth/auth.service";
+import { ClubService } from "../club/club.service";
 
 @Component({
   selector: 'app-header',
@@ -18,7 +19,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
 
   //userType = localStorage.getItem("userType");
   user = this.authService.getAuthData();
-
+  //club.id;
 
 
   ngOnInit() {
@@ -35,13 +36,15 @@ export class HeaderComponent implements OnInit, OnDestroy{
     .getAuthStatusListener()
     .subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated;
-      //this.isLoading = false;
-      //this.userType = localStorage.getItem("userType");
-      //console.log(this.user.userType);
+      //console.log(this.user.)
+
+      if(this.user.userType == "club") {
+
+      }
+
+
     });
-    //console.log(this.user);
-    //console.log(this.user.club);
-    //this.username = localStorage.getItem("username");
+
 
 
   }

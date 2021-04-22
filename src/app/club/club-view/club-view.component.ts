@@ -1,12 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormArray } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { ParamMap } from "@angular/router";
 
 import { Subscription } from 'rxjs';
 
 import { ClubService } from "../club.service";
 import { AuthService } from "../../auth/auth.service";
-
+import { Club } from '../club.model';
 
 
 
@@ -18,18 +20,65 @@ import { AuthService } from "../../auth/auth.service";
 })
 export class ClubViewComponent  implements OnInit, OnDestroy{
   isLoading = false;
+  panelOpenState = false;
   //govbodyUserForm: any;
+
+  private mode = 'view';
+  userId: string;
+  clubId: string;
+  clubName: string;
+  public club: Club;
+  teamsList = [];
 
   private authStatusSub: Subscription;
 
-  constructor(private fb: FormBuilder, public authService: AuthService) {}
+  constructor(
+    private fb: FormBuilder,
+    public route: ActivatedRoute,
+    public authService: AuthService,
+    public clubService: ClubService
+    ) {}
+
 
 
   ngOnInit() {
 
+    this.authStatusSub = this.authService
+    .getAuthStatusListener()
+    .subscribe(
+      authStatus => {
+        this.isLoading = false;
+      }
+    );
+
+
+    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      if (paramMap.has('userId')) {
+          this.userId = paramMap.get('userId');
+          this.clubService.getClubByCreator(this.userId)
+          .subscribe(
+            (clubData) => {
+              clubData = clubData[0];
+              this.isLoading = false;
+              this.club = {
+                id: clubData._id,
+                creator: clubData.creator,
+                clubName: clubData.clubName,
+                teams: clubData.teams,
+                players: clubData.players
+              };
+              this.clubName = this.club.clubName;
+              this.clubId = this.club.id;
+          });
+      }
+    })
 
   }
 
+  addTeam() {
+    console.log(this.clubId);
+    //this.clubService.addTeam(this.clubId);
+  }
 
 
 
@@ -41,6 +90,6 @@ export class ClubViewComponent  implements OnInit, OnDestroy{
   }
 
   ngOnDestroy() {
-
+    this.authStatusSub.unsubscribe();
   }
 }

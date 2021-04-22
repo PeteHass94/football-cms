@@ -53,7 +53,14 @@ exports.createUser = (req, res, next) => {
                 });
               })
               .then(() => {
-                createUser401(json_response, res);
+                newUser.typeId.push(newClub._id);
+                User.updateOne( {_id: newUser._id }, newUser )
+                .then(()=> {
+                  json_response.push({
+                    user: newUser
+                  });
+                  createUser201(json_response, res);
+                })
               });
           }
         })
@@ -86,7 +93,7 @@ exports.createUser = (req, res, next) => {
 
   }
 
-  function createUser401(json_response, res) {
+  function createUser201(json_response, res) {
     json_response.push({
       message:'User Created!'
     });
