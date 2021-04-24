@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)},
 
   { path: 'club/:userId', component: ClubViewComponent},
-  {path: 'league/create', component: LeagueCreateComponent }
+  { path: 'league/create', component: LeagueCreateComponent }
 ];
 
 @NgModule({

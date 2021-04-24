@@ -5,11 +5,13 @@ import { ActivatedRoute } from '@angular/router';
 import { ParamMap } from "@angular/router";
 
 import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 
 import { ClubService } from "../club.service";
 import { AuthService } from "../../auth/auth.service";
 import { Club } from '../club.model';
-
+import { Team } from '../../team/team.model';
 
 
 
@@ -19,6 +21,7 @@ import { Club } from '../club.model';
   styleUrls: ['./club-view.component.css']
 })
 export class ClubViewComponent  implements OnInit, OnDestroy{
+  addTeamFormVisible = false;
   isLoading = false;
   panelOpenState = false;
   //govbodyUserForm: any;
@@ -28,7 +31,7 @@ export class ClubViewComponent  implements OnInit, OnDestroy{
   clubId: string;
   clubName: string;
   public club: Club;
-  teamsList = [];
+  teamsList: Array<Team> = [];
 
   private authStatusSub: Subscription;
 
@@ -55,7 +58,8 @@ export class ClubViewComponent  implements OnInit, OnDestroy{
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('userId')) {
           this.userId = paramMap.get('userId');
-          this.clubService.getClubByCreator(this.userId)
+          this.clubService
+          .getClubByCreator(this.userId)
           .subscribe(
             (clubData) => {
               clubData = clubData[0];
@@ -67,9 +71,22 @@ export class ClubViewComponent  implements OnInit, OnDestroy{
                 teams: clubData.teams,
                 players: clubData.players
               };
-              this.clubName = this.club.clubName;
+              this.clubService.setClub(this.club);
+              this.clubName = this.clubService.getClubName();
               this.clubId = this.club.id;
+
           });
+
+          this.clubService.getTeamsByUserId(this.userId)
+          .subscribe(
+            (teamsData) => {
+              console.log(teamsData);
+              teamsData.teams.forEach(element => {
+                this.teamsList.push(element);
+              });
+              console.log(this.teamsList);
+            }
+          )
       }
     })
 

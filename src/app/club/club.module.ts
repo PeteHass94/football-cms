@@ -6,19 +6,21 @@ import { RouterModule } from "@angular/router";
 import { AngularMaterialModule } from "../angular-material.module";
 
 //Club
-import { ClubViewComponent } from "./club-view/club-view.component";
+import { ClubViewModule } from "./club-view/club-view.module";
 
 
 @NgModule({
   declarations: [
-    ClubViewComponent
+
 
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     AngularMaterialModule,
-    RouterModule
+    RouterModule,
+
+    ClubViewModule
 
   ]
 

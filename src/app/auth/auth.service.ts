@@ -42,6 +42,9 @@ export class AuthService {
   getUserId() {
     return this.userId;
   }
+  returnUser() {
+    return this.theUser;
+  }
 
   //Govbody creation
   createGovUser(
@@ -113,8 +116,9 @@ export class AuthService {
     this.httpClient
     .post(BACKEND_URL + "/signup", authData)
     .subscribe(response => {
-      //correct enter
-      this.router.navigate(['/auth/login']);
+
+      if(!this.isAuthenticated)
+        this.router.navigate(['/auth/login']);
       console.log(response);
 
     }, error => {
@@ -124,6 +128,7 @@ export class AuthService {
   }
 
   loginUser(username: string, password: string) {
+    this.clearAuthData();
     const authData: AuthDataLogin = {username: username, password: password};
     this.httpClient
       .post<{ token: string, expiresIn: number, userId: string, user: any }>(BACKEND_URL + "/login", authData)
@@ -243,7 +248,7 @@ export class AuthService {
     localStorage.removeItem('dob');
   }
 
-  getAuthData() {
+  private getAuthData() {
     const token = localStorage.getItem('token');
     const expirationDate = localStorage.getItem('expiration');
     const userId = localStorage.getItem('userId');
@@ -283,14 +288,45 @@ export class AuthService {
     }
   }
 
-  // getUserData(id: string) {
-  //   //return{...this.posts.find(p => p.id === id)};
-  //   return this.httpClient
-  //     .get<{
-  //       _id: string
-  //     }>(BACKEND_URL + id);
-  // }
+  getAuthDataFromLS() {
+    const token = localStorage.getItem('token');
+    const expirationDate = localStorage.getItem('expiration');
+    const userId = localStorage.getItem('userId');
 
+    const username = localStorage.getItem('username');
+    const userType = localStorage.getItem('userType');
+    const role = localStorage.getItem('role');
+    const name = localStorage.getItem('name');
+
+    const league = localStorage.getItem('league');
+    const club = localStorage.getItem('club');
+    const team = localStorage.getItem('team');
+    const dob = localStorage.getItem('dob');
+
+
+    if (!token || !expirationDate) {
+
+      return {
+        //userType: "logout",
+      }
+    }
+
+    return {
+      token: token,
+      expirationDate: new Date(expirationDate),
+      userId: userId,
+
+      username: username,
+      userType: userType,
+      role: role,
+      name: name,
+
+      league: league,
+      club: club,
+      team: team,
+      dob: dob
+    }
+  }
   private clubs: JSON;
 
   getAllClubs(){
@@ -316,5 +352,12 @@ export class AuthService {
     return clubsQuery;
   }
 
+  getUser(userId: string) {
+    const userQuery =
+      this.httpClient
+        .get<{ user: AuthData }> (BACKEND_URL + "/user/" +userId );
+
+    return userQuery;
+  }
 
 }

@@ -1,9 +1,7 @@
 <h1>Club View</h1>
-<h2>Club Name: <span>{{ clubName }} </span></h2>
-<h2>Club id: <span>{{ clubId }}</span></h2>
 
 <mat-card>
-  <mat-card-title>{{ clubName }}</mat-card-title>
+  <mat-card-title>{{ clubName | titlecase }}</mat-card-title>
   <mat-card-subtitle>{{ clubId }}</mat-card-subtitle>
 
   <mat-accordion *ngFor="let team of teamsList">
@@ -15,14 +13,23 @@
         </mat-panel-title>
         <mat-panel-description>
           {{panelOpenState ? 'close to hide details' : 'open for team details'}}
+          ({{ team._id}})
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <p>I'm visible because I am open</p>
+      <h4>Mangers:</h4>
+      <p *NgFor="let manager of managersList"></p>
+      <h4 *NgFor="coachs.length > 0">Coaches:</h4>
+      <p *NgFor="let coach of coachesList"></p>
+      <h4 *NgFor="players.length > 0">Players:</h4>
+      <p *NgFor="let player of playersList"></p>
+
+
     </mat-expansion-panel>
   </mat-accordion>
 
   <mat-action-row>
-    <button mat-button color="primary" (click)="addTeam()">Add Team</button>
+    <button mat-button color="primary" (click)="addTeamFormVisible = !addTeamFormVisible">Add Team</button>
 
   </mat-action-row>
 </mat-card>
+<app-club-view-add-team *ngIf="addTeamFormVisible" ></app-club-view-add-team>

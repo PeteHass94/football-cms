@@ -25,5 +25,8 @@ ClubController.getClubFromCreator);
 router.post("/userid/:userid/addteam",
 ClubController.addTeam);
 
+//get by userid
+router.get("/userid/:userid/teams",
+ClubController.getTeamsFromCreator);
 
 module.exports = router;

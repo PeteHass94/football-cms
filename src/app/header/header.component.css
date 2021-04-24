@@ -52,6 +52,11 @@ span.userInfoContent mat-divider {
   display: flex;
   justify-content: center;
 }
+.clubInfo li{
+  border-style: solid;
+  margin: auto 0.25em;
+
+}
 
 /*league */
 .leagueInfo {

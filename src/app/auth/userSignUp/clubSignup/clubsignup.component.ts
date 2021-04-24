@@ -29,10 +29,10 @@ export class ClubSignupComponent implements OnInit, OnDestroy{
 
   clubUserForm = this.fb.group({
     userType: ['club'],
-    role: [''],
-    name: [''],
-    username: [''],
-    club: [''],
+    role: ['club role'],
+    name: ['club name'],
+    username: ['clubfc'],
+    club: ['club fc'],
     password: ['password']
   });
 

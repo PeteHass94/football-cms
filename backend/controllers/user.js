@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
 const Club = require("../models/club");
+const Team = require("../models/team");
+
 const router = require("../routes/user");
 const ClubController = require("./club");
 
@@ -12,6 +14,8 @@ exports.createUser = (req, res, next) => {
   //console.log(req.body);
   let newUser;
   let newClub;
+  let newTeam;
+
   let json_response = [];
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
@@ -33,11 +37,14 @@ exports.createUser = (req, res, next) => {
 
       user.save()
         .then(user => {
-          json_response.push({
-            user: user
-          });
+          newUser = user;
+          // json_response.push({
+          //   user: user
+          // });
         })
         .then(() => {
+
+          //club
           if(newUser.userType == "club") {
             //console.log(this.createClub)
             //createClub(newUser, res);
@@ -63,8 +70,54 @@ exports.createUser = (req, res, next) => {
                 })
               });
           }
+
+          //team
+          if(newUser.userType == "manager") {
+            //console.log(this.createClub)
+            //createClub(newUser, res);
+            const team = new Team({
+              creator: newUser._id,
+              clubName: newUser.club,
+              teamName: newUser.team,
+              managers: [newUser.name],
+              players: ["player one", "player two"]
+            });
+
+            newTeam = team;
+            team.save()
+              .then(team => {
+                console.log("adding team to club");
+                Club.findOneAndUpdate(
+                  { clubName: team.clubName },
+                  { $push: { teams: team._id} },
+                  function (error, success) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log(success);
+                    }
+                  }
+                );
+
+                json_response.push({
+                  team: team
+                });
+              })
+              .then(() => {
+                newUser.typeId.push(newTeam._id);
+                User.updateOne( {_id: newUser._id }, newUser )
+                .then(()=> {
+                  json_response.push({
+                    user: newUser
+                  });
+                  createUser201(json_response, res);
+                })
+              });
+
+          }
+
         })
-        //then option
+        //then catch
         .catch(err => {
             console.log(err);
             res.status(500).json({
@@ -72,18 +125,6 @@ exports.createUser = (req, res, next) => {
             });
         });
 
-        // .then(result => {
-        //   res.status(201).json({
-        //     message: 'User Created!',
-        //     result: result
-        //   });
-        // })
-        // .catch(err => {
-        //   console.log(err);
-        //   res.status(500).json({
-        //     message: "Invalid authentication credentials."
-        //   });
-        // });
     });
 
 
@@ -182,6 +223,25 @@ exports.userLogin = (req, res, next) => {
         message: "Invalid authentication credentials."
         });
     });
+}
+
+//get User
+exports.getUser = (req,res,next) => {
+  const userQuery = User.findById(req.params.userid).then(user => {
+    console.log(user);
+      if(user) {
+        res.status(200).json(user);
+      }
+      else {
+        res.status(404).json({message: 'User not found!'});
+      }
+    })
+    .catch(error => {
+    res.status(500).json({
+      message: "Fetching User failed!"
+    });
+  });
+
 }
 
 //get clubs

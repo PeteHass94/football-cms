@@ -152,3 +152,31 @@ exports.addTeam = (req, res, next) => {
       });
     });
   }
+
+  exports.getTeamsFromCreator = (req, res, next) => {
+    // console.log(req.params.userid);
+    // console.log("getting teams");
+    Club.findOne({ creator: req.params.userid})
+    .then(club => {
+      //console.log(club.clubName);
+      Team.find({ clubName: club.clubName})
+      .then(teamData => {
+        //team
+        if(teamData) {
+          res.status(200).json({
+            teams: teamData
+          });
+        }
+        else {
+          res.status(404).json({message: 'Club not found!'});
+        }
+      })
+
+
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: "Fetching clubs failed!"
+      });
+    });
+  }

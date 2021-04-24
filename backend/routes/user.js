@@ -12,6 +12,9 @@ router.post("/signup/club", ClubController.createClub);
 //login user
 router.post("/login", UserController.userLogin);
 
+//get user
+router.get("/user/:userid", UserController.getUser);
+
 //get userClubs
 router.get("/clubs", UserController.getUserClubs);
 
