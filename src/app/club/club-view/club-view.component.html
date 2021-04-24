@@ -16,20 +16,28 @@
           ({{ team._id}})
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <h4>Mangers:</h4>
-      <p *NgFor="let manager of managersList"></p>
-      <h4 *NgFor="coachs.length > 0">Coaches:</h4>
-      <p *NgFor="let coach of coachesList"></p>
-      <h4 *NgFor="players.length > 0">Players:</h4>
-      <p *NgFor="let player of playersList"></p>
-
+      <mat-list>
+        <h4>Mangers:</h4>
+        <mat-list-item *NgFor="let manager of managersList">
+          <p>{{ manager }}</p>
+        </mat-list-item>
+        <h4 *NgIf="coachesList.length > 0">Coaches:</h4>
+        <mat-list-item *NgFor="let coach of coachesList">
+          <p>{{ coach }}</p>
+        </mat-list-item>
+        <h4 *NgIf="playersList.length > 0">Players:</h4>
+        <mat-list-item *NgFor="let player of playersList">
+          <p>{{ player }}</p>
+        </mat-list-item>
+      </mat-list>
 
     </mat-expansion-panel>
   </mat-accordion>
 
   <mat-action-row>
-    <button mat-button color="primary" (click)="addTeamFormVisible = !addTeamFormVisible">Add Team</button>
-
+    <button mat-button color="primary" (click)="addTeamFormVisible = !addTeamFormVisible">Add New Team</button>
+    <button mat-button color="primary" (click)="addPlayerFormVisible = !addPlayerFormVisible">Add New Player</button>
   </mat-action-row>
 </mat-card>
 <app-club-view-add-team *ngIf="addTeamFormVisible" ></app-club-view-add-team>
+<app-club-view-add-team *ngIf="addPlayerFormVisible" ></app-club-view-add-team>

@@ -43,7 +43,7 @@ export class ClubViewAddTeamComponent implements OnInit, OnDestroy{
 
   ngOnInit() {
     console.log(this.clubService.getClub());
-    this.managerUserForm.get('club').setValue(this.clubService.getClubName());
+    this.managerUserForm.get('club').setValue(this.clubService.getClubName().replace(/\s/g, ""));
     this.managerUserForm.get('username').setValue(this.clubService.getClubName());
 
     this.authStatusSub = this.authService

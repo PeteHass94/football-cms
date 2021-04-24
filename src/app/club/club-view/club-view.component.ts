@@ -12,6 +12,7 @@ import { ClubService } from "../club.service";
 import { AuthService } from "../../auth/auth.service";
 import { Club } from '../club.model';
 import { Team } from '../../team/team.model';
+import { Player } from '../../player/player.model';
 
 
 
@@ -22,6 +23,7 @@ import { Team } from '../../team/team.model';
 })
 export class ClubViewComponent  implements OnInit, OnDestroy{
   addTeamFormVisible = false;
+  addPlayerFormVisible = false;
   isLoading = false;
   panelOpenState = false;
   //govbodyUserForm: any;
@@ -32,6 +34,11 @@ export class ClubViewComponent  implements OnInit, OnDestroy{
   clubName: string;
   public club: Club;
   teamsList: Array<Team> = [];
+
+  managerList: Array<string> = [];
+  coachesList: Array<string> = [];
+  playersList: Array<Player> = [];
+
 
   private authStatusSub: Subscription;
 

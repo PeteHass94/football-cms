@@ -18,15 +18,11 @@ const BACKEND_URL = environment.apiURL + '/club/';
 export class ClubService {
   isLoading = false;
 
-  private clubStatusListener = new Subject<boolean>();
-
   private theClub: Club;
 
   constructor(private httpClient: HttpClient, private router: Router) {}
 
-  getAuthStatusListener() {
-    return this.clubStatusListener.asObservable();
-  }
+
 
   getClubByCreator(userid: string) {
     //return{...this.posts.find(p => p.id === id)};

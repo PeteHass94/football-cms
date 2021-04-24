@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const Club = require("../models/club");
 const Team = require("../models/team");
+const Player = require("../models/player");
 
 const router = require("../routes/user");
 const ClubController = require("./club");
@@ -15,6 +16,7 @@ exports.createUser = (req, res, next) => {
   let newUser;
   let newClub;
   let newTeam;
+  let newPlayer;
 
   let json_response = [];
   bcrypt.hash(req.body.password, 10)
@@ -105,6 +107,52 @@ exports.createUser = (req, res, next) => {
               })
               .then(() => {
                 newUser.typeId.push(newTeam._id);
+                User.updateOne( {_id: newUser._id }, newUser )
+                .then(()=> {
+                  json_response.push({
+                    user: newUser
+                  });
+                  createUser201(json_response, res);
+                })
+              });
+
+          }
+
+          //player
+          if(newUser.userType == "player") {
+            //console.log(this.createClub)
+            //createClub(newUser, res);
+            const player = new Player({
+              creator: newUser._id,
+              playerName: newUser.name,
+              dob: newUser.dob,
+              clubName: newUser.club,
+              teams: [newUser.team],
+              stats: { appearances: 0, goals: 0, assists: 0 }
+            });
+
+            newPlayer = player;
+            player.save()
+              .then(player => {
+                console.log("adding player to club");
+                Club.findOneAndUpdate(
+                  { clubName: team.clubName },
+                  { $push: { players: team._id} },
+                  function (error, success) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log(success);
+                    }
+                  }
+                );
+
+                json_response.push({
+                  player: player
+                });
+              })
+              .then(() => {
+                newUser.typeId.push(newPlayer._id);
                 User.updateOne( {_id: newUser._id }, newUser )
                 .then(()=> {
                   json_response.push({

@@ -21,6 +21,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
 //  imports: [
@@ -53,7 +54,8 @@ import { MatDividerModule } from '@angular/material/divider';
   MatNativeDateModule,
   MatTabsModule,
   MatChipsModule,
-  MatDividerModule
+  MatDividerModule,
+  MatListModule
  ]
 })
 export class AngularMaterialModule {

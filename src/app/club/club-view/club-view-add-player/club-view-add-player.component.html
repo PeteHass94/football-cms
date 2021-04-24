@@ -1,0 +1,78 @@
+<mat-card>
+  <form
+  [formGroup]="playerUserForm"
+  *ngIf="!isLoading"
+  (ngSubmit)="onSubmit()"
+  >
+
+    <mat-form-field>
+      <input
+      matInput
+      type="text"
+      name="role"
+
+      placeholder="Your Role"
+      formControlName="role"
+      >
+      <mat-error *ngIf="playerUserForm.role?.invalid">Please enter a valid role.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+      matInput
+      type="text"
+      name="name"
+
+      placeholder="Your Full Name"
+      formControlName="name"
+      >
+      <mat-error *ngIf="playerUserForm.name?.invalid">Please enter a valid name.</mat-error>
+    </mat-form-field>
+
+
+
+    <mat-form-field>
+      <mat-label>Select dob</mat-label>
+      <input
+      matInput
+      [matDatepicker]="picker"
+      formControlName="dob"
+      name = "dob"
+      >
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+      matInput
+      type="text"
+      name="username"
+
+      placeholder="Your Username"
+      formControlName="username"
+
+      (focus)="onUsernameFocus()"
+      (blur)="onUsernameBlur()"
+      >
+      <mat-error *ngIf="playerUserForm.username?.invalid">Please enter a valid username.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+      matInput
+      type="password"
+      name="password"
+
+      placeholder="Password"
+      formControlName="password"
+      >
+      <mat-error *ngIf="playerUserForm.name?.invalid">Please enter a valid password.</mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">
+      Signup
+    </button>
+
+  </form>
+  </mat-card>
