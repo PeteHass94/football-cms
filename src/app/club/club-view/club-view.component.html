@@ -36,16 +36,8 @@
       </mat-list>
       <mat-list *ngIf="teamsList[i].players.length > 0" dense>
         <h5>Players:</h5>
-        <!-- <mat-list-item *ngFor="let player of teamsList[i].players">
-          <p>{{ player | titlecase }}</p>
-        </mat-list-item>
-        <mat-list *ngFor="let teamPlayer of teamPlayerList[i]; index as k">
-          {{ teamPlayer }}
-        </mat-list>
-      <mat-list-item >
-          <p>{{ teamPlayerList[i] }}</p>
-        </mat-list-item>-->
-        <app-club-view-see-players [selectedTeam]="teamsList[i]" ></app-club-view-see-players>
+        <app-club-view-see-players [selectedTeam]="teamsList[i]" >
+        </app-club-view-see-players>
 
       </mat-list>
       <mat-action-row>

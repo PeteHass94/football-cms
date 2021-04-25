@@ -1,13 +1,11 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { Player } from 'src/app/player/player.model';
 import { Team } from 'src/app/team/team.model';
 
 import { AuthService } from "../../../auth/auth.service";
 import { ClubService } from '../../club.service';
-
 
 
 @Component({

@@ -16,11 +16,7 @@ const teamRoutes = require("./routes/team");
 //player routes
 const playerRoutes = require("./routes/player");
 
-
 const { createShorthandPropertyAssignment } = require('typescript');
-
-
-
 
 const app = express();
 //if error, reset ip, if error remove ?retrywrites
@@ -36,20 +32,10 @@ mongoose.connect(
     console.log('Connection failed ' + err);
   });
 
-  //Dr6KNXBVt0VJAivB myFirstDatabase
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use("/images", express.static(path.join("backend/images")));
 
-
-
-
-// app.use((req, res, next) => {
-//   console.log('First MiddleWare');
-//   next();
-
-// });
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -64,7 +50,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
 app.use("/api/posts", postsRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/club", clubRoutes);
@@ -72,10 +57,10 @@ app.use("/api/team", teamRoutes);
 app.use("/api/player", playerRoutes);
 
 app.use("/", express.static(path.join(__dirname, "../dist/football-cms")));
-// app.use("/", express.static(path.join(__dirname, "angular")));
+
 app.use((req, res, next) => {
   res.sendFile(path.join(__dirname, "../dist/football-cms/index.html"));
-  //res.sendFile(path.join(__dirname,"angular", "index.html"));
+
 });
 
 

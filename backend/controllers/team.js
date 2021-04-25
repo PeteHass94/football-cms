@@ -7,7 +7,6 @@ const Team = require ('../models/team');
 const User = require("../models/user");
 const Club = require ('../models/club');
 
-
 exports.getTeam = (req, res, next) => {
   console.log(req.params.id);
   Team.findById(req.params.id).then(team => {

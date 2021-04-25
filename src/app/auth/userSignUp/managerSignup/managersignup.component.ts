@@ -13,7 +13,6 @@ interface Team {
   viewValue: string;
 }
 
-
 @Component({
   selector: 'app-manager-signup',
   templateUrl: './managersignup.component.html',

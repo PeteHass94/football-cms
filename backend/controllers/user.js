@@ -33,23 +33,18 @@ exports.createUser = (req, res, next) => {
         team: req.body.team,
         password: hash
       })
-      //console.log("new user");
-      //console.log(user._id);
+
       newUser = user;
 
       user.save()
         .then(user => {
           newUser = user;
-          // json_response.push({
-          //   user: user
-          // });
+
         })
         .then(() => {
 
           //club
           if(newUser.userType == "club") {
-            //console.log(this.createClub)
-            //createClub(newUser, res);
             const club = new Club({
               creator: newUser._id,
               clubName: newUser.club
@@ -75,8 +70,7 @@ exports.createUser = (req, res, next) => {
 
           //team
           if(newUser.userType == "manager") {
-            //console.log(this.createClub)
-            //createClub(newUser, res);
+
             const team = new Team({
               creator: newUser._id,
               clubName: newUser.club,
@@ -122,8 +116,7 @@ exports.createUser = (req, res, next) => {
 
           //player
           if(newUser.userType == "player") {
-            //console.log(this.createClub)
-            //createClub(newUser, res);
+
             const player = new Player({
               creator: newUser._id,
               playerName: newUser.name,
@@ -178,10 +171,7 @@ exports.createUser = (req, res, next) => {
 
     });
 
-
-
     console.log("end user creation");
-
 
   }
 

@@ -77,15 +77,11 @@ export class ClubViewAddTeamToTeamComponent implements OnInit, OnDestroy{
 
 
     confirm() {
-      //console.log(this.selectedPlayers);
+
 
       this.selectedPlayers.forEach(selectedPlayer => {
-        // console.log(selectedPlayer._id);
-        // let selectedPlayerId = selectedPlayer[0]._id;
-        // console.log(selectedPlayerId);
+
         if(this.selectedTeam.players.indexOf(selectedPlayer._id) < 0){
-          // this.playerService.pushTeamIdToPlayer(selectedPlayer._id, this.selectedTeam._id).subscribe();
-          // this.teamService.pushPlayerIdToTeam(selectedPlayer._id, this.selectedTeam._id).subscribe();
 
           this.clubService.addPlayerToTeamByIds(selectedPlayer._id, this.selectedTeam._id)
           .subscribe(() => {});

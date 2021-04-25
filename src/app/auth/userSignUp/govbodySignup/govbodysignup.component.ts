@@ -11,7 +11,6 @@ import { AuthService } from "../../auth.service";
 })
 export class GovbodySignupComponent implements OnInit, OnDestroy{
   isLoading = false;
-  //govbodyUserForm: any;
 
   private authStatusSub: Subscription;
 

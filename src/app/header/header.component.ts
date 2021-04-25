@@ -18,41 +18,13 @@ export class HeaderComponent implements OnInit, OnDestroy{
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  // user: AuthData = {
-  //   username: null,
-  //   role: null,
-  //   userType: null,
-  //   name: null,
-  //   dob: null,
-  //   club: null,
-  //   team: null,
-  //   league: null,
-  //   password: null
-  // };
-  //user: any;
-  //userType = localStorage.getItem("userType");
-  //user = this.authService.returnUser();
-  //club.id;
   user = this.authService.getAuthDataFromLS();
   userModel: AuthData;
 
   ngOnInit() {
-    //this.user = this.authService.getAuthDataFromLS();
-    //console.log(this.user);
-
-    // if(!this.user.userType && !localStorage.getItem("userType")) {
-    //   localStorage.setItem('userType', 'no reload')
-    //   location.reload();
-    // }
 
     this.isLoading = true;
 
-    //console.log(this.user);
-
-    // this.authService.getUser(this.userId).subscribe(gotUser => {
-    //   this.user = gotUser.user;
-    //   this.isLoading = false;
-    // });
     this.userIsAuthenticated = this.authService.getIsAuth();
 
     this.authListenerSubs = this.authService
@@ -83,9 +55,6 @@ export class HeaderComponent implements OnInit, OnDestroy{
         console.log(this.user);
         console.log(this.router.url);
       }
-      // if(this.user.userType == "club") {
-
-      // }
 
 
     });
@@ -134,12 +103,6 @@ export class HeaderComponent implements OnInit, OnDestroy{
   consolelog() {
     console.log(this.user);
   }
-
-
-
-
-
-
 
 
   onLogout() {

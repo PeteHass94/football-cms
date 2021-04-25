@@ -1,17 +1,12 @@
 
 const express = require("express");
 
-
-
-
 const checkAuth = require("../middleware/check-auth");
 const extractFile = require("../middleware/file");
 
 const PostController = require("../controllers/globalPosts");
 
 const router = express.Router();
-
-
 
 
 //POST new post

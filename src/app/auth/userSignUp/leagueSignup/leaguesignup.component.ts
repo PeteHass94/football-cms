@@ -51,7 +51,6 @@ export class LeagueSignupComponent implements OnInit, OnDestroy{
         this.leagueUserForm.get("username").setValue(newUsername, { emitEvent: false });
     });
   }
-
   usernameFocus = false;
   onUsernameFocus() {
     this.usernameFocus = true;

@@ -12,10 +12,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   private authStatusSub: Subscription;
 
-
-
   constructor(public authService: AuthService) {}
-
 
   ngOnInit() {
     this.authStatusSub = this.authService.getAuthStatusListener().subscribe(
@@ -23,16 +20,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       }
     );
-
   }
 
   onLogin(form: NgForm) {
-    //console.log(form.value);
-    // if (form.invalid) {
-    //   return;
-    // }
     this.isLoading = true;
-    //form.value.username = "league";
     form.value.password = "password";
     this.authService.loginUser(form.value.username.toLowerCase(), form.value.password);
   }

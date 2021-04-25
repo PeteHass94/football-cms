@@ -1,15 +1,10 @@
 const express = require("express");
 
-
-
-
 const checkAuth = require("../middleware/check-auth");
-
 
 const TeamController = require("../controllers/team");
 
 const router = express.Router();
-
 
 //get by club id
 router.get("/clubid/:id",

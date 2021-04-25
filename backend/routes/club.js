@@ -1,17 +1,12 @@
 
 const express = require("express");
 
-
-
-
 const checkAuth = require("../middleware/check-auth");
 const extractFile = require("../middleware/file");
 
 const ClubController = require("../controllers/club");
 
 const router = express.Router();
-
-
 
 //get by club id
 router.get("/clubid/:id",

@@ -11,7 +11,6 @@ const clubSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId
   }]
 
-
 });
 
 clubSchema.plugin(uniqueValidator);

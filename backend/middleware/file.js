@@ -1,7 +1,6 @@
 //upload image
 const multer = require("multer");
 
-
 const MIM_TYPE_MAP = {
   'image/png': 'png',
   'image/jpeg': 'jpg',

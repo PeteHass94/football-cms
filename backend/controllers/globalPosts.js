@@ -12,18 +12,13 @@ exports.createPost = (req, res, next) => {
     club: req.body.club
   });
 
-  //console.log(post);
   post.save().then(createdPost => {
-    //console.log(result);
+
     res.status(201).json({
       message: "Post added successfully",
-      //postId: createdPost._id
       post: {
         ...createdPost,
-        id: createdPost._id,
-        // title: createdPost.title,
-        // content: createdPost.content,
-        // imagePath: createdPost.imagePath
+        id: createdPost._id
       }
     });
   })
@@ -34,7 +29,6 @@ exports.createPost = (req, res, next) => {
   });
 }
 
-
 exports.updatePost = (req, res, next) => {
   let imagePath = req.body.imagePath;
   if (req.file) {
@@ -42,7 +36,6 @@ exports.updatePost = (req, res, next) => {
     imagePath = url + "/images/" + req.file.filename;
   }
 
-  //  console.log(req.file);
   const post = new Post({
     _id: req.body.id,
     title: req.body.title,
@@ -51,9 +44,7 @@ exports.updatePost = (req, res, next) => {
     creator: req.userData.userId
   });
 
-  //console.log(post);
   Post.updateOne({ _id: req.params.id, creator: req.userData.userId  }, post).then(result => {
-    //console.log(result);
 
     if (result.n > 0) {
       res.status(200).json({ message: "Update Successful!" });
@@ -70,7 +61,6 @@ exports.updatePost = (req, res, next) => {
 }
 
 exports.getPosts = (req, res, next) => {
-  //console.log(req.query);
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   const clubName = req.query.clubname;
@@ -79,7 +69,6 @@ exports.getPosts = (req, res, next) => {
   console.log(pageSize);
 
   const postQuery = Post.find({ $or: [ {club: "global"}, {club: clubName} ]});
-  //const postQuery = Post.find( {club: clubName});
   let fetchedPosts;
 
   if (pageSize && currentPage) {
@@ -91,8 +80,7 @@ exports.getPosts = (req, res, next) => {
     .then((documents) => {
       fetchedPosts = documents;
       console.log(fetchedPosts);
-      return Post.countDocuments();//.count();
-
+      return Post.countDocuments({ $or: [ {club: "global"}, {club: clubName} ]});//.count();
 
     })
     .then(count => {

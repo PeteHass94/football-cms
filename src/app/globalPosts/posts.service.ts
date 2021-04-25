@@ -82,17 +82,6 @@ export class PostsService {
         BACKEND_URL, postData
         )
       .subscribe((responseData) => {
-        //console.log(responseData.message);
-        // const post: Post = {
-        //   id: responseData.post.id,
-        //   title: title,
-        //   content: content,
-        //   imagePath: responseData.post.imagePath
-        // };
-        // //const newId = responseData.postId;
-        // //post.id = newId;
-        // this.posts.push(post);
-        // this.postsUpdated.next([...this.posts]);
         this.router.navigate(["/"]);
       });
   }
@@ -115,29 +104,11 @@ export class PostsService {
         };
     }
 
-    // const post: Post = {
-    //   id: id,
-    //   title: title,
-    //   content: content,
-    //   imagePath: null
-    // };
 
 
     this.httpClient
       .put(BACKEND_URL + id, postData)
       .subscribe(response =>  {
-        //console.log(response));
-        // const updatedPosts = [...this.posts];
-        // const oldPostIndex = updatedPosts.findIndex(p => p.id === id);
-        // const post: Post = {
-        //   id: id,
-        //   title: title,
-        //   content: content,
-        //   imagePath: ""
-        // }
-        // updatedPosts[oldPostIndex] = post;
-        // this.posts = updatedPosts;
-        // this.postsUpdated.next([...this.posts]);
         this.router.navigate(["/"]);
       });
 
@@ -145,15 +116,7 @@ export class PostsService {
 
   //DELTETE
   deletePost(postId: string) {
-    // this.httpClient
-    //   .delete("http://localhost:3000/api/posts/" + postId)
-      // .subscribe(() => {
-      //   const updatedPosts = this.posts.filter(post => post.id !== postId);
-      //   this.posts = updatedPosts;
-      //   this.postsUpdated.next([...this.posts]);
-      //   //console.log("Deleted " + postId);
-      // });
-    return this.httpClient
+      return this.httpClient
       .delete(BACKEND_URL + postId);
   }
 

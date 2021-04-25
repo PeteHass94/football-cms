@@ -16,7 +16,6 @@ interface Club {
 })
 export class ClubSignupComponent implements OnInit, OnDestroy{
   isLoading = false;
-  //govbodyUserForm: any;
 
   private authStatusSub: Subscription;
 
@@ -25,7 +24,6 @@ export class ClubSignupComponent implements OnInit, OnDestroy{
   clubs: Club[] = [
     {value: 'Na', viewValue: 'Na'}
   ]
-
 
   clubUserForm = this.fb.group({
     userType: ['club'],
@@ -49,7 +47,6 @@ export class ClubSignupComponent implements OnInit, OnDestroy{
 
     this.clubUserForm.valueChanges
     .subscribe(x => {
-      //console.log(x);
       if(this.clubUserForm.get("role").value.length > 4)
         useRole = this.clubUserForm.get("role").value.substring(0,5);
       else
@@ -60,8 +57,6 @@ export class ClubSignupComponent implements OnInit, OnDestroy{
       if(!this.usernameFocus)
         this.clubUserForm.get("username").setValue(newUsername, { emitEvent: false });
     });
-
-
 
   }
 

@@ -14,7 +14,6 @@ const playerSchema = mongoose.Schema({
   trainings: [{ type: mongoose.Schema.Types.ObjectId }],
   matches: [{ type: mongoose.Schema.Types.ObjectId }]
 
-
 });
 
 module.exports = mongoose.model('Player', playerSchema);

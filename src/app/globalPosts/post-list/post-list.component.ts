@@ -12,11 +12,6 @@ import { AuthService } from "../../auth/auth.service";
   styleUrls: ['./post-list.component.css']
 })
 export class PostListComponent implements OnInit, OnDestroy {
-  // posts= [
-  //   {title: 'First Post', content: "This is the first post\'s comment"},
-  //   {title: 'Second Post', content: "This is the second post\'s comment"},
-  //   {title: 'Third Post', content: "This is the third post\'s comment"}
-  // ];
 
   clubMatch = false;
 
@@ -24,9 +19,9 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   isLoading = false;
   totalPosts = 0;
-  postPerPage = 2;
+  postPerPage = 5;
   currentPage = 1;
-  pageSizeOptions = [1,2,5,10];
+  pageSizeOptions = [2,5,10,25];
 
   userId: string;
 
@@ -68,9 +63,6 @@ onChangedPage(pageData: PageEvent) {
   this.currentPage = pageData.pageIndex + 1; //starts at 0
   this.postPerPage = pageData.pageSize;
   this.postsService.getPosts(this.postPerPage, this.currentPage, this.clubName);
-
-
-  //console.log(pageData);
 
 }
 

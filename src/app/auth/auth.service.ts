@@ -334,13 +334,6 @@ export class AuthService {
     this.httpClient
       .get<{ message: string, noClubs: number, clubs: JSON}>(BACKEND_URL + "/clubs" );
 
-    //console.log(BACKEND_URL + "/clubs");
-    // //console.log(clubsQuery);
-
-    // clubsQuery.subscribe((transformedClubData) => {
-    //   this.clubs = transformedClubData.clubs
-    //   console.log(this.clubs);
-    // });
     return clubsQuery;
   }
 

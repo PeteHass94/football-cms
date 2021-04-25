@@ -46,7 +46,6 @@ export class ClubViewComponent  implements OnInit, OnDestroy{
 
   isLoading = false;
   panelOpenState = false;
-  //govbodyUserForm: any;
 
   private mode = 'view';
   userId: string;
@@ -59,10 +58,7 @@ export class ClubViewComponent  implements OnInit, OnDestroy{
 
   playersList: Array<Player> = [];
 
-  //teamPlayerList: Array<{teamId: string, playersInTeam: Array<Player>}> = [];
-
-
-  private authStatusSub: Subscription;
+   private authStatusSub: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -111,23 +107,11 @@ export class ClubViewComponent  implements OnInit, OnDestroy{
           this.clubService.getTeamsByUserId(this.userId)
           .subscribe(
             (teamsData) => {
-              //console.log(teamsData);
 
               teamsData.teams.forEach(team => {
                 this.teamsList.push(team);
 
-                // if(team.players.length > 0) {
-                //   this.clubService.getPlayersFromTeamId(team._id)
-                //   .subscribe(players => {
-                //     console.log(players.players);
-                //     this.teamPlayerList[i].teamId.setValue(team._id);
-                //   })
-                // }
-
-
               });
-              //console.log(this.teamPlayerList);
-
             }
           );
           this.clubService.getPlayersByUserId(this.userId)
@@ -136,16 +120,8 @@ export class ClubViewComponent  implements OnInit, OnDestroy{
               playersData.players.forEach(element => {
                 this.playersList.push(element);
               });
-              //console.log(this.playersList);
             }
           );
-
-
-
-          // .subscribe
-
-
-
       }
     })
 
@@ -153,19 +129,9 @@ export class ClubViewComponent  implements OnInit, OnDestroy{
 
   addTeam() {
     console.log(this.clubId);
-    //this.clubService.addTeam(this.clubId);
-  }
-
-
-
-
-
-
-  onSubmit() {
-
-
 
   }
+
 
   ngOnDestroy() {
     this.authStatusSub.unsubscribe();

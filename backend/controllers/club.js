@@ -8,12 +8,6 @@ const Team = require ('../models/team');
 const Player = require ('../models/player');
 
 
-exports.createClub = (req, res, next) => {
-    console.log(req.body);
-    console.log("create club ran ");
-}
-
-
 exports.getClub = (req, res, next) => {
   console.log(req.params.id);
   Club.findById(req.params.id).then(club => {
@@ -31,7 +25,6 @@ exports.getClub = (req, res, next) => {
     });
   });
 }
-
 
 exports.addTeam = (req, res, next) => {
   console.log("addTeam");
@@ -179,8 +172,7 @@ exports.addTeam = (req, res, next) => {
   }
 
   exports.getPlayersFromCreator = (req, res, next) => {
-    //console.log(req.params.userid);
-    // console.log("getting teams");
+
     Club.findOne({ creator: req.params.userid})
     .then(club => {
       //console.log(club.clubName);
@@ -204,8 +196,6 @@ exports.addTeam = (req, res, next) => {
       });
     });
   }
-
-
 
   exports.getTeamFromCreatorAndManagerId = (req, res, next) => {
     console.log(req.params.userid);
@@ -288,49 +278,7 @@ exports.addTeam = (req, res, next) => {
           res.status(500).json({
             message: "Pushing team failed!"
           });
-        });
-
-
-
-
-
-
-
-
-
-    // // /addplayer/:playerid/toteam/:teamid",
-    // console.log(req.body);
-    // console.log("player: "+req.params.playerid);
-    // console.log("team: "+req.params.teamid);
-
-    // let json_response = [];
-    // Player.updateOne(
-    //   { _id: req.params.playerid },
-    //   { $push: { teams: req.params.teamid }}
-    // ).then(()=>{
-    //   Team.updateOne(
-    //     { _id: req.params.teamid },
-    //     { $push: { players: req.params.playerid }}
-    //     );
-    // }).catch(error => {
-    //     res.status(500).json({
-    //       message: "Pushing team failed!"
-    //     });
-    //   });
-
-
-
-    //
-
-    // createUser200(json_response, res)
-    // .catch(error => {
-    //   res.status(500).json({
-    //     message: "Pushing team failed!"
-    //   });
-    // });
-
-
-
+    });
 
   }
 

@@ -62,24 +62,6 @@ export class ClubService {
     return this.theClub.teams;
   }
 
-  addTeam(
-    // userType: string,
-    // role: string,
-    // name: string,
-    // username: string,
-    // club: string,
-    // team: string,
-    // password: string
-
-
-  ){
-    // const clubQuery = this.httpClient
-    //   .post<{
-    //     _
-    //   }>(BACKEND_URL + 'userid/' + userid);
-    return null;
-  }
-
   //getTeams by userid
   getTeamsByUserId(userId: string) {
 
@@ -96,7 +78,6 @@ export class ClubService {
      .get<{ players: Array<Player>}>
      (BACKEND_URL + 'userid/' + userId + '/players');
 
-     //console.log(BACKEND_URL + 'userid/' + userId + '/players');
     return clubQuery;
   }
 
@@ -118,58 +99,6 @@ export class ClubService {
 
     return this.playerService.getPlayersByTeamId(teamId);
   }
-
-
-  // addPlayerToTeamByIds(playerId: string, teamId: string) {
-  //   //"/addplayer/:playerid/toteam/:teamid",
-  //   let newPlayer: Player;
-  //   this.playerService.getPlayerByPlayerId(playerId).subscribe(player => newPlayer=player.player);
-  //   let newTeam: Team;
-  //   this.teamService.getTeamByTeamId(teamId).subscribe(team => newTeam=team.team);
-
-  //   console.log(newPlayer);
-  //   newPlayer.teams.push(teamId);
-  //   newTeam.players.push(playerId);
-
-  //   const newPlayerAndTeam = [{ player: newPlayer, team: newTeam}];
-
-  //   const clubQuery = this.httpClient
-  //    .put
-  //    (BACKEND_URL + 'addplayer/' + playerId + '/toteam/' + teamId,
-  //     newPlayerAndTeam);
-
-  //    console.log(BACKEND_URL + 'addplayer/' + playerId + '/toteam/' + teamId);
-  //   return clubQuery;
-  // }
-
-  // //Manager creation
-  // createManagerUser(
-  //   userType: string,
-  //   role: string,
-  //   name: string,
-  //   username: string,
-  //   club: string,
-  //   team: string,
-  //   password: string
-  //   ){
-  //   const authData: AuthDataManager = {
-  //     userType: userType, role: role, name: name, club: club, team: team,
-  //     username: username, password: password}
-  //   this.createUser(authData);
-  // }
-  // createUser(authData: any){
-  //   this.httpClient
-  //   .post(BACKEND_URL + "/signup", authData)
-  //   .subscribe(response => {
-  //     //correct enter
-  //     this.router.navigate(['/auth/login']);
-  //     console.log(response);
-
-  //   }, error => {
-  //     //error handling
-  //     this.authStatusListener.next(false);
-  //   });
-
 
 }
 

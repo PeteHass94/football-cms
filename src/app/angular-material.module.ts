@@ -25,17 +25,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
-//  imports: [
-//   MatIconModule,
-//   MatInputModule,
-//   MatCardModule,
-//   MatButtonModule,
-//   MatToolbarModule,
-//   MatExpansionModule,
-//   MatProgressSpinnerModule,
-//   MatPaginatorModule,
-//   MatDialogModule
-//  ],
+
  exports: [
   MatIconModule,
   MatInputModule,
@@ -46,7 +36,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   MatProgressSpinnerModule,
   MatPaginatorModule,
   MatDialogModule,
-
   MatAutocompleteModule,
   MatRadioModule,
   MatFormFieldModule,
