@@ -60,6 +60,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
     .subscribe(isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated;
       if(this.userIsAuthenticated){
+
         if(!this.user.userType ) {
           this.router.navigate(['/'])
           .then(() => {
@@ -68,7 +69,17 @@ export class HeaderComponent implements OnInit, OnDestroy{
           });
         }
         this.userModel = this.authService.returnUser();
-        this.user = this.overwriteUser(this.user, this.userModel);
+        let userId = this.authService.getUserId();
+        if(this.user.userId !== userId ) {
+          this.router.navigate(['/'])
+          .then(() => {
+            //console.log(location);
+            location.reload()
+          });
+        }
+
+        console.log(this.user.userId);
+        this.user = this.overwriteUser(this.user, this.userModel, userId);
         console.log(this.user);
         console.log(this.router.url);
       }
@@ -84,8 +95,12 @@ export class HeaderComponent implements OnInit, OnDestroy{
   }
 
 
-  private overwriteUser(theUser: any, userModel: AuthData) {
+  private overwriteUser(theUser: any, userModel: AuthData, userId: string) {
     const overwrittenUser = theUser;
+
+    if(theUser.userid != userId || theUser.userid) {
+      overwrittenUser.userid = userId;
+    }
 
     if(theUser.username) {
       overwrittenUser.username = userModel.username;

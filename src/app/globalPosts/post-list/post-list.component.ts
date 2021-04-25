@@ -18,6 +18,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   //   {title: 'Third Post', content: "This is the third post\'s comment"}
   // ];
 
+  clubMatch = false;
 
   posts: Post[] = [];
 
@@ -32,13 +33,16 @@ export class PostListComponent implements OnInit, OnDestroy {
   private postsSub: Subscription;
   private authStatusSub: Subscription;
 
+  clubName = localStorage.getItem('club');
+
   userIsAuthenticated = false;
 
   constructor(public postsService: PostsService, private authService: AuthService) {}
 
   ngOnInit() {
+    this.clubName = localStorage.getItem('club');
     this.isLoading = true;
-    this.postsService.getPosts(this.postPerPage, this.currentPage);
+    this.postsService.getPosts(this.postPerPage, this.currentPage, this.clubName);
     this.postsSub = this.postsService
       .getPostUpdateListener()
       .subscribe((postData: {posts: Post[], postCount: number }) => {
@@ -63,7 +67,7 @@ onChangedPage(pageData: PageEvent) {
   this.isLoading = true;
   this.currentPage = pageData.pageIndex + 1; //starts at 0
   this.postPerPage = pageData.pageSize;
-  this.postsService.getPosts(this.postPerPage, this.currentPage);
+  this.postsService.getPosts(this.postPerPage, this.currentPage, this.clubName);
 
 
   //console.log(pageData);
@@ -75,9 +79,9 @@ onChangedPage(pageData: PageEvent) {
     this.isLoading = true;
     this.postsService.deletePost(postId).subscribe(() =>{
       if(this.currentPage > (this.totalPosts/this.postPerPage))
-        this.postsService.getPosts(this.postPerPage, this.currentPage-1)
+        this.postsService.getPosts(this.postPerPage, this.currentPage-1, this.clubName)
       else
-        this.postsService.getPosts(this.postPerPage, this.currentPage)
+        this.postsService.getPosts(this.postPerPage, this.currentPage, this.clubName)
     }, () => {
       this.isLoading = false;
     });

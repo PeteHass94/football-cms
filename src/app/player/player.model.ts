@@ -1,23 +1,17 @@
 export interface Player{
-  id: string;
+  _id: string;
   creator: string;
   playerName: string,
   dob: Date,
   clubName: string;
-  teams: [{
-    type: string
-  }],
+  teams: Array<string>,
   stats: {
     appearances: number,
     goals: number,
     assists: number
   },
 
-  trainings: [{
-    type: string
-  }]
-  matches: [{
-    type: string
-  }]
+  trainings: Array<string>,
+  matches: Array<string>
 
 }

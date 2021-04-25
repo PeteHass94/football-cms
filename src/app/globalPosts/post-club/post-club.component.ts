@@ -11,13 +11,13 @@ import { Subscription } from "rxjs";
 import { AuthService } from "src/app/auth/auth.service";
 
 @Component({
-  selector: 'app-post-create',
-  templateUrl: './post-create.component.html',
-  styleUrls: ['./post-create.component.css']
+  selector: 'app-post-club',
+  templateUrl: './post-club.component.html',
+  styleUrls: ['./post-club.component.css']
 })
-export class PostCreateComponent implements OnInit, OnDestroy {
+export class PostClubComponent implements OnInit, OnDestroy {
 
-  clubName = "global"
+  clubName = localStorage.getItem('club');
   enteredTitle = '';
   enteredContent = '';
   private mode = 'create';

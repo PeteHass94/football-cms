@@ -25,8 +25,24 @@ ClubController.getClubFromCreator);
 router.post("/userid/:userid/addteam",
 ClubController.addTeam);
 
-//get by userid
+//get teams by userid
 router.get("/userid/:userid/teams",
 ClubController.getTeamsFromCreator);
+
+
+//get teams by club userid and manager
+router.get("/userid/:userid/teams",
+ClubController.getTeamsFromCreator);
+
+//get teams by club userid and manager
+router.get("/userid/:userid/players",
+ClubController.getPlayersFromCreator);
+
+//UPDATE team by club userid with
+router.put(
+  "/addplayer/:playerid/toteam/:teamid",
+  ClubController.addPlayerToTeamByCreator
+);
+
 
 module.exports = router;

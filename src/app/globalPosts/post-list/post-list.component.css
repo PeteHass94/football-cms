@@ -22,3 +22,18 @@ mat-spinner {
 mat-paginator {
   margin-top: 1rem;
 }
+
+.globalPost {
+  background-color: gold;
+
+}
+
+.clubPost {
+  background-color: aqua;
+
+}
+
+mat-panel-description {
+  display: inline;
+  text-align: right;
+}

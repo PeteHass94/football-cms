@@ -5,13 +5,12 @@ const Club = require ('../models/club');
 
 const User = require("../models/user");
 const Team = require ('../models/team');
+const Player = require ('../models/player');
 
 
 exports.createClub = (req, res, next) => {
     console.log(req.body);
     console.log("create club ran ");
-
-
 }
 
 
@@ -160,23 +159,185 @@ exports.addTeam = (req, res, next) => {
     .then(club => {
       //console.log(club.clubName);
       Team.find({ clubName: club.clubName})
-      .then(teamData => {
+      .then(teamsData => {
         //team
-        if(teamData) {
+        if(teamsData) {
           res.status(200).json({
-            teams: teamData
+            teams: teamsData
           });
         }
         else {
           res.status(404).json({message: 'Club not found!'});
         }
       })
-
-
     })
     .catch(error => {
       res.status(500).json({
-        message: "Fetching clubs failed!"
+        message: "Fetching teams failed!"
       });
     });
+  }
+
+  exports.getPlayersFromCreator = (req, res, next) => {
+    //console.log(req.params.userid);
+    // console.log("getting teams");
+    Club.findOne({ creator: req.params.userid})
+    .then(club => {
+      //console.log(club.clubName);
+      Player.find({ clubName: club.clubName })
+      .then(playersData => {
+        //console.log(playersData);
+        //players
+        if(playersData) {
+          res.status(200).json({
+            players: playersData
+          });
+        }
+        else {
+          res.status(404).json({message: 'Club not found!'});
+        }
+      })
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: "Fetching players failed!"
+      });
+    });
+  }
+
+
+
+  exports.getTeamFromCreatorAndManagerId = (req, res, next) => {
+    console.log(req.params.userid);
+    console.log(req.params.managerid);
+    // console.log("getting teams");
+    Club.findOne({ creator: req.params.userid})
+    .then(club => {
+      //console.log(club.clubName);
+      Team.findOne({ creator: req.params.managerid})
+      .then(teamData => {
+        //team
+        if(teamData) {
+          res.status(200).json({
+            team: teamData
+          });
+        }
+        else {
+          res.status(404).json({message: 'Club not found!'});
+        }
+      })
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: "Fetching teams failed!"
+      });
+    });
+  }
+
+  exports.addPlayerToTeamByCreator = (req, res, next) => {
+
+    //console.log(req.body);
+    let newPlayer;
+    let newTeam;
+    let json_response = [];
+
+    Player.findById(req.body[0].playerid)
+    .then(player =>{
+      newPlayer = player;
+      newPlayer.teams.push(req.body[0].teamid);
+      json_response.push({
+        player: newPlayer
+      });
+    })
+    .then(() => {
+      Player.updateOne({_id: req.body[0].playerid }, newPlayer)
+      .then(result => {
+        console.log(result);
+        if (result.n > 0) {
+          json_response.push({ message1: "Player update Successful!" });
+        } else {
+          res.status(401).json({ message: "Not Authorized" });
+        }
+      })
+      .then(()=> {
+        Team.findById(req.body[0].teamid)
+        .then(team =>{
+          newTeam = team;
+          newTeam.players.push(req.body[0].playerid);
+          json_response.push({
+            team: newTeam
+          });
+        })
+        .then(() => {
+          Team.updateOne({_id: req.body[0].teamid }, newTeam)
+          .then(result => {
+            console.log(result);
+            if (result.n > 0) {
+              json_response.push({ message2: "Team update Successful!" });
+            } else {
+              res.status(401).json({ message: "Not Authorized" });
+            }
+          })
+          .then(() => {
+            createUser200(json_response,res);
+          });
+        })
+      })
+    })
+    .catch(error => {
+          res.status(500).json({
+            message: "Pushing team failed!"
+          });
+        });
+
+
+
+
+
+
+
+
+
+    // // /addplayer/:playerid/toteam/:teamid",
+    // console.log(req.body);
+    // console.log("player: "+req.params.playerid);
+    // console.log("team: "+req.params.teamid);
+
+    // let json_response = [];
+    // Player.updateOne(
+    //   { _id: req.params.playerid },
+    //   { $push: { teams: req.params.teamid }}
+    // ).then(()=>{
+    //   Team.updateOne(
+    //     { _id: req.params.teamid },
+    //     { $push: { players: req.params.playerid }}
+    //     );
+    // }).catch(error => {
+    //     res.status(500).json({
+    //       message: "Pushing team failed!"
+    //     });
+    //   });
+
+
+
+    //
+
+    // createUser200(json_response, res)
+    // .catch(error => {
+    //   res.status(500).json({
+    //     message: "Pushing team failed!"
+    //   });
+    // });
+
+
+
+
+  }
+
+  function createUser200(json_response, res) {
+    json_response.push({
+      message:'Player and Team Updated!'
+    });
+    console.log(json_response);
+    res.status(200).json(json_response);
   }

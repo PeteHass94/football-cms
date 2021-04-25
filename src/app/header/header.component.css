@@ -45,7 +45,7 @@ span.userInfoContent mat-divider {
   margin-left: 0.25em;
 }
 
-/*Club */
+/*Club and Manager*/
 .clubInfo {
   color: black;
   text-align: center;
@@ -55,7 +55,6 @@ span.userInfoContent mat-divider {
 .clubInfo li{
   border-style: solid;
   margin: auto 0.25em;
-
 }
 
 /*league */
@@ -72,4 +71,3 @@ span.userInfoContent mat-divider {
   border-style: solid;
   margin: auto 0.25em;
 }
-

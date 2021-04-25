@@ -1,10 +1,9 @@
-<mat-card>
 <form
 [formGroup]="managerUserForm"
 *ngIf="!isLoading"
 (ngSubmit)="onSubmit()"
 >
-
+  <h5>Add Team Form</h5>
   <mat-form-field>
     <input
     matInput
@@ -56,21 +55,8 @@
     <mat-error *ngIf="managerUserForm.username?.invalid">Please enter a valid username.</mat-error>
   </mat-form-field>
 
-  <mat-form-field>
-    <input
-    matInput
-    type="password"
-    name="password"
-
-    placeholder="Password"
-    formControlName="password"
-    >
-    <mat-error *ngIf="managerUserForm.name?.invalid">Please enter a valid password.</mat-error>
-  </mat-form-field>
-
   <button mat-raised-button color="primary" type="submit">
     Signup
   </button>
 
 </form>
-</mat-card>

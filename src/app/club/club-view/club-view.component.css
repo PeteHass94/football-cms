@@ -1,6 +1,10 @@
 mat-panel-description {
-  width: 100%;
   display: inline;
   text-align: right;
-    justify-content: right;
+}
+
+.addTeamFormCard,
+.addPlayerFormCard {
+  padding-top: 0;
+  padding-bottom: 0;
 }

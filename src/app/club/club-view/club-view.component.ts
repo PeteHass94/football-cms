@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ParamMap } from "@angular/router";
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -13,6 +15,8 @@ import { AuthService } from "../../auth/auth.service";
 import { Club } from '../club.model';
 import { Team } from '../../team/team.model';
 import { Player } from '../../player/player.model';
+import { PlayerService } from 'src/app/player/player.service';
+
 
 
 
@@ -22,8 +26,24 @@ import { Player } from '../../player/player.model';
   styleUrls: ['./club-view.component.css']
 })
 export class ClubViewComponent  implements OnInit, OnDestroy{
-  addTeamFormVisible = false;
+  refresh() {
+    location.reload();
+  }
   addPlayerFormVisible = false;
+  addTeamFormVisible = false;
+
+  addTeamCounter = 0;
+  addTeamForms() {
+    this.addTeamCounter++;
+  }
+  addPlayerCounter = 0;
+  addPlayerForms() {
+    this.addPlayerCounter++;
+  }
+
+  public addPlayerToTeamVisible = false;
+
+
   isLoading = false;
   panelOpenState = false;
   //govbodyUserForm: any;
@@ -34,10 +54,12 @@ export class ClubViewComponent  implements OnInit, OnDestroy{
   clubName: string;
   public club: Club;
   teamsList: Array<Team> = [];
-
-  managerList: Array<string> = [];
+  managersList: Array<string> = [];
   coachesList: Array<string> = [];
+
   playersList: Array<Player> = [];
+
+  //teamPlayerList: Array<{teamId: string, playersInTeam: Array<Player>}> = [];
 
 
   private authStatusSub: Subscription;
@@ -46,7 +68,8 @@ export class ClubViewComponent  implements OnInit, OnDestroy{
     private fb: FormBuilder,
     public route: ActivatedRoute,
     public authService: AuthService,
-    public clubService: ClubService
+    public clubService: ClubService,
+    public playerService: PlayerService
     ) {}
 
 
@@ -64,15 +87,17 @@ export class ClubViewComponent  implements OnInit, OnDestroy{
 
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('userId')) {
+          console.log(paramMap);
           this.userId = paramMap.get('userId');
           this.clubService
           .getClubByCreator(this.userId)
           .subscribe(
             (clubData) => {
+              console.log(clubData);
               clubData = clubData[0];
               this.isLoading = false;
               this.club = {
-                id: clubData._id,
+                _id: clubData._id,
                 creator: clubData.creator,
                 clubName: clubData.clubName,
                 teams: clubData.teams,
@@ -80,20 +105,47 @@ export class ClubViewComponent  implements OnInit, OnDestroy{
               };
               this.clubService.setClub(this.club);
               this.clubName = this.clubService.getClubName();
-              this.clubId = this.club.id;
-
+              this.clubId = this.club._id;
           });
 
           this.clubService.getTeamsByUserId(this.userId)
           .subscribe(
             (teamsData) => {
-              console.log(teamsData);
-              teamsData.teams.forEach(element => {
-                this.teamsList.push(element);
+              //console.log(teamsData);
+
+              teamsData.teams.forEach(team => {
+                this.teamsList.push(team);
+
+                // if(team.players.length > 0) {
+                //   this.clubService.getPlayersFromTeamId(team._id)
+                //   .subscribe(players => {
+                //     console.log(players.players);
+                //     this.teamPlayerList[i].teamId.setValue(team._id);
+                //   })
+                // }
+
+
               });
-              console.log(this.teamsList);
+              //console.log(this.teamPlayerList);
+
             }
-          )
+          );
+          this.clubService.getPlayersByUserId(this.userId)
+          .subscribe(
+            (playersData) => {
+              playersData.players.forEach(element => {
+                this.playersList.push(element);
+              });
+              //console.log(this.playersList);
+            }
+          );
+
+
+
+          // .subscribe
+
+
+
       }
     })
 
@@ -103,6 +155,8 @@ export class ClubViewComponent  implements OnInit, OnDestroy{
     console.log(this.clubId);
     //this.clubService.addTeam(this.clubId);
   }
+
+
 
 
 

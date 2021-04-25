@@ -1,0 +1,46 @@
+<!-- <mat-form-field>
+  <mat-label>Select Team Name</mat-label>
+  <mat-select
+  formControlName="team"
+  name = "team"
+  >
+    <mat-option *ngFor="let team of teams" [value]="team.value">
+      {{ team.viewValue }}
+    </mat-option>
+  </mat-select>
+</mat-form-field> -->
+
+<!-- <form
+[formGroup]="playerToTeamForm"
+*ngIf="!isLoading"
+(ngSubmit)="onSubmit()"
+>
+<h5>Select Player</h5>
+<mat-form-field>
+  <mat-label>Select Team Name</mat-label>
+  <mat-select
+  formControlName="playerName"
+  name = "team"
+  >
+    <mat-option *ngFor="let team of teams" [value]="team.value">
+      {{ team.viewValue }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+</form> -->
+
+<mat-selection-list
+#players
+[(ngModel)]="selectedPlayers">
+  <mat-list-option *ngFor="let player of playersList" [value]="player">
+    {{ player.playerName | titlecase}}
+  </mat-list-option>
+</mat-selection-list>
+
+<button mat-button color="primary"
+*ngIf="selectedPlayers.length > 0"
+(click)="confirm()">
+  Confirm Players
+</button>
+

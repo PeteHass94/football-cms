@@ -17,17 +17,16 @@ export class PostsService {
 
   constructor(private httpClient: HttpClient, private router: Router) {}
 
-  // private apiUrl = 'http://localhost:3000/api/posts';
 
-  getPosts(postsPerPage: number, currentPage: number) {
-
-    const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
+  getPosts(postsPerPage: number, currentPage: number, clubName: string) {
+    //console.log(clubName);
+    const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}&clubname=${clubName}`;
 
     this.httpClient
       .get<{message: string, posts: any, maxPosts: number }>( BACKEND_URL + queryParams)
       .pipe(
         map((postData) => {
-            //console.log(postData);
+            console.log(postData);
               return {
                 posts: postData.posts.map(post => {
                 return {
@@ -35,7 +34,8 @@ export class PostsService {
                   content: post.content,
                   id: post._id,
                   imagePath: post.imagePath,
-                  creator: post.creator
+                  creator: post.creator,
+                  club: post.club
                 };
               }),
             maxPosts: postData.maxPosts
@@ -43,7 +43,7 @@ export class PostsService {
         })
       )
       .subscribe((transformedPostData) => {
-        //console.log(transformedPostData);
+        console.log(transformedPostData);
         this.posts = transformedPostData.posts;
         this.postsUpdated.next({
           posts: [...this.posts],
@@ -69,12 +69,13 @@ export class PostsService {
       }>(BACKEND_URL + id);
   }
 
-  addPost(title: string, content: string, image: File) {
+  addPost(title: string, content: string, image: File, clubName: string) {
     //const post: Post = { id: null, title: title, content: content};
     const postData = new FormData();
     postData.append("title", title);
     postData.append("content", content);
     postData.append("image", image, title);
+    postData.append("club", clubName);
 
     this.httpClient
       .post<{message: string, post: Post }>(

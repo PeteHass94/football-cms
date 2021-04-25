@@ -124,6 +124,7 @@ export class PlayerSignupComponent implements OnInit, OnDestroy{
       getDate,
       this.playerUserForm.get("password").value
     );
+    //this.playerUserForm.reset();
   }
 
   ngOnDestroy() {

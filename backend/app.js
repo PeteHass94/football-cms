@@ -13,6 +13,8 @@ const clubRoutes = require("./routes/club");
 
 //team routes
 const teamRoutes = require("./routes/team");
+//player routes
+const playerRoutes = require("./routes/player");
 
 
 const { createShorthandPropertyAssignment } = require('typescript');
@@ -67,6 +69,7 @@ app.use("/api/posts", postsRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/club", clubRoutes);
 app.use("/api/team", teamRoutes);
+app.use("/api/player", playerRoutes);
 
 app.use("/", express.static(path.join(__dirname, "../dist/football-cms")));
 // app.use("/", express.static(path.join(__dirname, "angular")));

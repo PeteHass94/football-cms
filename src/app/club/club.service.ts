@@ -10,6 +10,9 @@ import { Router } from '@angular/router';
 import { environment } from "../../environments/environment.prod";
 import { ClubViewModule } from './club-view/club-view.module';
 import { Team } from '../team/team.model';
+import { Player } from '../player/player.model';
+import { PlayerService } from '../player/player.service';
+import { TeamService } from '../team/team.service';
 
 const BACKEND_URL = environment.apiURL + '/club/';
 
@@ -20,7 +23,12 @@ export class ClubService {
 
   private theClub: Club;
 
-  constructor(private httpClient: HttpClient, private router: Router) {}
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router,
+    public playerService: PlayerService,
+    public teamService: TeamService
+    ) {}
 
 
 
@@ -78,12 +86,61 @@ export class ClubService {
     const clubQuery = this.httpClient
      .get<{ teams: Array<Team>}>
      (BACKEND_URL + 'userid/' + userId + '/teams');
-    console.log(BACKEND_URL + 'userid/' + userId + '/teams');
-    console.log(clubQuery);
-
 
     return clubQuery;
   }
+
+  //getTeams by userid
+  getPlayersByUserId(userId: string) {
+    const clubQuery = this.httpClient
+     .get<{ players: Array<Player>}>
+     (BACKEND_URL + 'userid/' + userId + '/players');
+
+     //console.log(BACKEND_URL + 'userid/' + userId + '/players');
+    return clubQuery;
+  }
+
+  addPlayerToTeamByIds(playerId: string, teamId: string) {
+    //"/addplayer/:playerid/toteam/:teamid",
+
+    const idsPlayerAndTeam = [{ playerid: playerId, teamid: teamId}];
+
+    const clubQuery = this.httpClient
+     .put
+     (BACKEND_URL + 'addplayer/' + playerId + '/toteam/' + teamId,
+      idsPlayerAndTeam);
+
+    return clubQuery;
+  }
+
+  getPlayersFromTeamId(teamId: string) {
+    console.log(teamId);
+
+    return this.playerService.getPlayersByTeamId(teamId);
+  }
+
+
+  // addPlayerToTeamByIds(playerId: string, teamId: string) {
+  //   //"/addplayer/:playerid/toteam/:teamid",
+  //   let newPlayer: Player;
+  //   this.playerService.getPlayerByPlayerId(playerId).subscribe(player => newPlayer=player.player);
+  //   let newTeam: Team;
+  //   this.teamService.getTeamByTeamId(teamId).subscribe(team => newTeam=team.team);
+
+  //   console.log(newPlayer);
+  //   newPlayer.teams.push(teamId);
+  //   newTeam.players.push(playerId);
+
+  //   const newPlayerAndTeam = [{ player: newPlayer, team: newTeam}];
+
+  //   const clubQuery = this.httpClient
+  //    .put
+  //    (BACKEND_URL + 'addplayer/' + playerId + '/toteam/' + teamId,
+  //     newPlayerAndTeam);
+
+  //    console.log(BACKEND_URL + 'addplayer/' + playerId + '/toteam/' + teamId);
+  //   return clubQuery;
+  // }
 
   // //Manager creation
   // createManagerUser(

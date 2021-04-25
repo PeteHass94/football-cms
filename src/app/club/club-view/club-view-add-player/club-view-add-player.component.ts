@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from "../../../auth/auth.service";
@@ -26,12 +27,16 @@ export class ClubViewAddPlayerComponent implements OnInit, OnDestroy{
 
   private authStatusSub: Subscription;
 
-  constructor(private fb: FormBuilder, public authService: AuthService, public clubService: ClubService) {}
+  constructor(
+    private fb: FormBuilder,
+    public authService: AuthService,
+    public clubService: ClubService,
+    private _snackBar: MatSnackBar) {}
 
   playerUserForm = this.fb.group({
     userType: ['player'],
-    role: [''],
-    name: [''],
+    role: ['player role'],
+    name: ['player name'],
     username: [''],
     club: [''],
     dob:[''],
@@ -43,7 +48,7 @@ export class ClubViewAddPlayerComponent implements OnInit, OnDestroy{
 
   ngOnInit() {
     console.log(this.clubService.getClub());
-    this.playerUserForm.get('club').setValue(this.clubService.getClubName().replace(/\s/g, ""));
+    this.playerUserForm.get('club').setValue(this.clubService.getClubName());
     this.playerUserForm.get('username').setValue(this.clubService.getClubName());
 
     this.authStatusSub = this.authService
@@ -62,14 +67,16 @@ export class ClubViewAddPlayerComponent implements OnInit, OnDestroy{
 
     this.playerUserForm.valueChanges
     .subscribe(x => {
-      useName = this.playerUserForm.get("name").value.replace(/\s/g, "");
+      useName = this.playerUserForm.get("name").value;
+      if(useName)
+        useName.replace(/\s/g, "");
       if(this.playerUserForm.get("dob").value){
         getDate = this.playerUserForm.get("dob").value;
         useDate = getDate.getFullYear();
       }
       else
         useDate = new Date().getFullYear();
-      newUsername = (useName + useDate).toLowerCase();
+      newUsername = (useName + useDate).toLowerCase().replace(/\s/g, "");;
       if(!this.usernameFocus)
         this.playerUserForm.get("username").setValue(newUsername, { emitEvent: false });
     });
@@ -115,6 +122,15 @@ export class ClubViewAddPlayerComponent implements OnInit, OnDestroy{
       getDate,
       this.playerUserForm.get("password").value
     );
+
+    this._snackBar.open(
+      "(Created Player) UserName: " +
+      this.playerUserForm.get("username").value.toLowerCase() +
+      " For " +
+      this.playerUserForm.get("club").value,
+     'Hide', {
+      duration: 3000
+    });
   }
 
   ngOnDestroy() {

@@ -1,17 +1,11 @@
 export interface Team{
-  id: string;
+  _id: string;
   creator: string;
   clubName: string;
   teamName: string;
-  managers: [{
-    type: string
-  }],
-  coaches: [{
-    type: string
-  }],
-  players: [{
-    type: string
-  }]
+  managers: Array<string>,
+  coaches: Array<string>,
+  players: Array<string>,
 
 }
 

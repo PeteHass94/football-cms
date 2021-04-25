@@ -8,13 +8,15 @@ import { AngularMaterialModule } from "../angular-material.module";
 //posts
 import { PostCreateComponent } from './post-create/post-create.component';
 import { PostListComponent } from './post-list/post-list.component';
+import { PostClubComponent } from "./post-club/post-club.component";
 
 
 
 @NgModule({
   declarations: [
     PostCreateComponent,
-    PostListComponent
+    PostListComponent,
+    PostClubComponent
   ],
   imports: [
     CommonModule,

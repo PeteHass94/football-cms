@@ -1,5 +1,5 @@
 export interface Club{
-  id: string;
+  _id: string;
   creator: string;
   clubName: string;
   teams: [{

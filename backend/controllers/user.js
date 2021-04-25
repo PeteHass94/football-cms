@@ -82,20 +82,22 @@ exports.createUser = (req, res, next) => {
               clubName: newUser.club,
               teamName: newUser.team,
               managers: [newUser.name],
-              players: ["player one", "player two"]
+              players: []
             });
 
             newTeam = team;
             team.save()
               .then(team => {
-                console.log("adding team to club");
+                console.log("adding team to club " + team.clubName);
                 Club.findOneAndUpdate(
                   { clubName: team.clubName },
                   { $push: { teams: team._id} },
                   function (error, success) {
                     if (error) {
+                        console.log("push team error");
                         console.log(error);
                     } else {
+                        console.log("push team success");
                         console.log(success);
                     }
                   }
@@ -127,7 +129,6 @@ exports.createUser = (req, res, next) => {
               playerName: newUser.name,
               dob: newUser.dob,
               clubName: newUser.club,
-              teams: [newUser.team],
               stats: { appearances: 0, goals: 0, assists: 0 }
             });
 
@@ -136,12 +137,14 @@ exports.createUser = (req, res, next) => {
               .then(player => {
                 console.log("adding player to club");
                 Club.findOneAndUpdate(
-                  { clubName: team.clubName },
-                  { $push: { players: team._id} },
+                  { clubName: player.clubName },
+                  { $push: { players: player._id} },
                   function (error, success) {
                     if (error) {
-                        console.log(error);
+                      console.log("push player error");
+                      console.log(error);
                     } else {
+                        console.log("push player success");
                         console.log(success);
                     }
                   }

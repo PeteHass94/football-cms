@@ -2,11 +2,14 @@ const Post = require('../models/globalPost');
 
 exports.createPost = (req, res, next) => {
   const url = req.protocol + '://' + req.get("host");
+  console.log("post create");
+  console.log(req.body);
   const post = new Post({
     title: req.body.title,
     content: req.body.content,
     imagePath: url + "/images/" + req.file.filename,
-    creator: req.userData.userId
+    creator: req.userData.userId,
+    club: req.body.club
   });
 
   //console.log(post);
@@ -70,20 +73,26 @@ exports.getPosts = (req, res, next) => {
   //console.log(req.query);
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
-  const postQuery = Post.find();
-  let fetchedPosts
+  const clubName = req.query.clubname;
+  console.log(req.query.clubname);
+  console.log(currentPage);
+  console.log(pageSize);
+
+  const postQuery = Post.find({ $or: [ {club: "global"}, {club: clubName} ]});
+  //const postQuery = Post.find( {club: clubName});
+  let fetchedPosts;
 
   if (pageSize && currentPage) {
     postQuery
       .skip(pageSize * (currentPage - 1))
       .limit(pageSize);
-
   }
   postQuery
     .then((documents) => {
       fetchedPosts = documents;
+      console.log(fetchedPosts);
       return Post.countDocuments();//.count();
-      //console.log(documents);
+
 
     })
     .then(count => {
