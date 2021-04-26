@@ -35,8 +35,8 @@ export class ClubViewAddPlayerComponent implements OnInit, OnDestroy{
 
   playerUserForm = this.fb.group({
     userType: ['player'],
-    role: ['player role'],
-    name: ['player name'],
+    role: ['adult or junior'],
+    name: [''],
     username: [''],
     club: [''],
     dob:[''],

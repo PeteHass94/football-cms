@@ -23,7 +23,7 @@ export class PlayerSignupComponent implements OnInit, OnDestroy{
   constructor(private fb: FormBuilder, public authService: AuthService) {}
 
   playerUserForm = this.fb.group({
-    userType: ['manager'],
+    userType: ['player'],
     role: [''],
     name: [''],
     username: [''],

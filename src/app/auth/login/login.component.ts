@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   onLogin(form: NgForm) {
     this.isLoading = true;
-    form.value.password = "password";
     this.authService.loginUser(form.value.username.toLowerCase(), form.value.password);
   }
 
