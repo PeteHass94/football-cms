@@ -55,6 +55,18 @@
     <mat-error *ngIf="managerUserForm.username?.invalid">Please enter a valid username.</mat-error>
   </mat-form-field>
 
+  <mat-form-field>
+    <input
+    matInput
+    type="password"
+    name="password"
+
+    placeholder="Password"
+    formControlName="password"
+    >
+    <mat-error *ngIf="playerUserForm.name?.invalid">Please enter a valid password.</mat-error>
+  </mat-form-field>
+
   <button mat-raised-button color="primary" type="submit">
     Signup
   </button>

@@ -35,12 +35,12 @@ export class ClubViewAddTeamComponent implements OnInit, OnDestroy{
 
   managerUserForm = this.fb.group({
     userType: ['manager'],
-    role: ['team role'],
-    name: ['team name'],
-    username: ['clubfc1'],
+    role: [''],
+    name: [''],
+    username: [''],
     club: [''],
-    teamName:['firsts'],
-    password: ['password']
+    teamName:[''],
+    password: ['']
   });
 
 

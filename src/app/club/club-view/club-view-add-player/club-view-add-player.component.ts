@@ -40,7 +40,7 @@ export class ClubViewAddPlayerComponent implements OnInit, OnDestroy{
     username: [''],
     club: [''],
     dob:[''],
-    password: ['password']
+    password: ['']
   });
 
 
