@@ -33,7 +33,7 @@ export class ManagerSignupComponent implements OnInit, OnDestroy{
     username: [''],
     club: [''],
     team:[''],
-    password: ['password']
+    password: ['']
   });
 
 

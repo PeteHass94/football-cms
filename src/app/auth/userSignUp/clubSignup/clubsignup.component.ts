@@ -31,7 +31,7 @@ export class ClubSignupComponent implements OnInit, OnDestroy{
     name: [''],
     username: [''],
     club: [''],
-    password: ['password']
+    password: ['']
   });
 
   ngOnInit() {

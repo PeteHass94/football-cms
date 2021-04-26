@@ -21,7 +21,7 @@ export class GovbodySignupComponent implements OnInit, OnDestroy{
     role: [''],
     name: [''],
     username: [''],
-    password: ['password']
+    password: ['']
   });
 
   ngOnInit() {

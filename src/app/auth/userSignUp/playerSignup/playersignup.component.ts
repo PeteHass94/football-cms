@@ -29,7 +29,7 @@ export class PlayerSignupComponent implements OnInit, OnDestroy{
     username: [''],
     club: [''],
     dob:[''],
-    password: ['password']
+    password: ['']
   });
 
 

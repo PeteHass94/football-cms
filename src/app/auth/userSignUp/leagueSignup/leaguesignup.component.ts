@@ -23,7 +23,7 @@ export class LeagueSignupComponent implements OnInit, OnDestroy{
     name: [''],
     username: [''],
     league: [''],
-    password: ['password']
+    password: ['']
   });
 
   ngOnInit() {
