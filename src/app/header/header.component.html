@@ -32,7 +32,7 @@
       Club: {{user.club | titlecase}}<mat-divider [vertical]="true"></mat-divider>
     </span>
     <span *ngIf="user.team !== 'undefined'">
-      Team: {{user.team | titlecase}}<mat-divider [vertical]="true"></mat-divider>
+      Team: {{user.team | titlecase}},<mat-divider [vertical]="true"></mat-divider>
     </span>
     <span *ngIf="!user.dob && user.dob !== 'undefined'">
       Dob: {{user.dob}}<mat-divider [vertical]="true"></mat-divider>

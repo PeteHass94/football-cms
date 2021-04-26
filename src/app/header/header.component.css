@@ -39,7 +39,7 @@ span.userInfoContent {
   flex-direction: row;
 }
 
-span.userInfoContent mat-divider {
+span mat-divider {
   border-right-width: 5px;
   margin-right: 0.25em;
   margin-left: 0.25em;
