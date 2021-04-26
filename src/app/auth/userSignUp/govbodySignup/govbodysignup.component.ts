@@ -37,8 +37,8 @@ export class GovbodySignupComponent implements OnInit, OnDestroy{
     this.govbodyUserForm.valueChanges
       .subscribe(x => {
         //console.log(x);
-        if(this.govbodyUserForm.get("role").value.length > 3)
-          useRole = this.govbodyUserForm.get("role").value.substring(0,5);
+        if(this.govbodyUserForm.get("role").value.length > 4)
+          useRole = this.govbodyUserForm.get("role").value.substring(0,3);
         else
           useRole = this.govbodyUserForm.get("role").value;
         useName = this.govbodyUserForm.get("name").value.replace(/\s/g, "");

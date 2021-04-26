@@ -12,6 +12,7 @@ const ClubController = require("./club");
 
 //create user /signup
 exports.createUser = (req, res, next) => {
+  console.log("req.body");
   //console.log(req.body);
   let newUser;
   let newClub;
@@ -21,8 +22,8 @@ exports.createUser = (req, res, next) => {
   let json_response = [];
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
+      //console.log(hash);
       const user = new User({
-        //email: req.body.email,
         username: req.body.username,
         userType: req.body.userType,
         role: req.body.role,
@@ -42,7 +43,7 @@ exports.createUser = (req, res, next) => {
 
         })
         .then(() => {
-
+          //console.log(newUser.userType);
           //club
           if(newUser.userType == "club") {
             const club = new Club({
@@ -69,7 +70,7 @@ exports.createUser = (req, res, next) => {
           }
 
           //team
-          if(newUser.userType == "manager") {
+          else if(newUser.userType == "manager") {
 
             const team = new Team({
               creator: newUser._id,
@@ -115,7 +116,7 @@ exports.createUser = (req, res, next) => {
           }
 
           //player
-          if(newUser.userType == "player") {
+          else if(newUser.userType == "player") {
 
             const player = new Player({
               creator: newUser._id,
@@ -158,7 +159,13 @@ exports.createUser = (req, res, next) => {
                 })
               });
 
+
           }
+          //other
+          else {
+            createUser201(json_response, res);
+          }
+
 
         })
         //then catch
@@ -183,37 +190,6 @@ exports.createUser = (req, res, next) => {
     res.status(201).json(json_response);
   }
 
-
-
-//   function createClub(user, res) {
-//     console.log("star club create");
-//     //console.log(req.body);
-//     console.log(user);
-//     console.log("create club ran ");
-
-//     const club = new Club({
-//       creator: user._id,
-//       clubName: user.club
-//     });
-
-//     club.save()
-//     .then(createdClub => {
-//       console.log(createdClub);
-//       res.status(201).push({
-//         message2: "Club added successfully",
-//         //postId: createdPost._id
-//         club: {
-//           id: createdClub._id
-//         }
-//     });
-//   })
-//   .catch(error => {
-//     res.status(500).json({
-//       message: "Creating a post failed"
-//     });
-//   });
-
-// }
 
 //user login /login
 exports.userLogin = (req, res, next) => {
@@ -341,33 +317,3 @@ exports.getUserTeams = (req,res,next) => {
   });
 }
 
-// exports.getUser = (req,res,next) => {
-//   User.findById(req.params.id).then(user => {
-//     console.log(user);
-//     if(post) {
-//       res.status(200).json(post);
-
-//     }
-
-//   })
-
-// }
-
-
-// exports.getPost = (req, res, next) => {
-//   Post.findById(req.params.id).then(post => {
-//     console.log(post);
-//     if(post) {
-//       res.status(200).json(post);
-//     }
-//     else {
-//       res.status(404).json({message: 'Post not found!'});
-//     }
-//   })
-//   .catch(error => {
-//     res.status(500).json({
-//       message: "Fetching posts failed!"
-//     });
-//   });
-
-// }

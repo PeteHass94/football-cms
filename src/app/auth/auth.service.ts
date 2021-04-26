@@ -113,13 +113,15 @@ export class AuthService {
   }
 
   createUser(authData: any){
+    console.log(authData);
+
     this.httpClient
     .post(BACKEND_URL + "/signup", authData)
     .subscribe(response => {
+      console.log(response);
 
       if(!this.isAuthenticated)
         this.router.navigate(['/auth/login']);
-      console.log(response);
 
     }, error => {
       //error handling

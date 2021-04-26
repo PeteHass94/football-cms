@@ -26,7 +26,7 @@ export class PostsService {
       .get<{message: string, posts: any, maxPosts: number }>( BACKEND_URL + queryParams)
       .pipe(
         map((postData) => {
-            console.log(postData);
+            //console.log(postData);
               return {
                 posts: postData.posts.map(post => {
                 return {
@@ -43,7 +43,7 @@ export class PostsService {
         })
       )
       .subscribe((transformedPostData) => {
-        console.log(transformedPostData);
+        //console.log(transformedPostData);
         this.posts = transformedPostData.posts;
         this.postsUpdated.next({
           posts: [...this.posts],
@@ -103,8 +103,6 @@ export class PostsService {
           creator: null
         };
     }
-
-
 
     this.httpClient
       .put(BACKEND_URL + id, postData)

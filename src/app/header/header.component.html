@@ -53,12 +53,25 @@
       <li>
         <a mat-button [routerLink]="['/club', user.userId]" routerLinkActive="mat-primary">View Club</a>
       </li>
+      <li>
+        <a mat-button routerLink="/create/club" routerLinkActive="mat-primary">Club Post</a>
+      </li>
     </ul>
 
   </mat-toolbar>
 
   <mat-toolbar *ngIf="user.userType === 'manager' && userIsAuthenticated" class="clubInfo" color="warn">
     <span class="clubActionsHeading"><strong>Manager Actions </strong></span>
+    <ul *ngIf="userIsAuthenticated">
+      <li>
+        <a mat-button routerLink="/create/club" routerLinkActive="mat-primary">Club Post</a>
+      </li>
+    </ul>
+
+  </mat-toolbar>
+
+  <mat-toolbar *ngIf="user.userType === 'player' && userIsAuthenticated" class="clubInfo" color="warn">
+    <span class="clubActionsHeading"><strong>Player Actions </strong></span>
     <ul *ngIf="userIsAuthenticated">
       <li>
         <a mat-button routerLink="/create/club" routerLinkActive="mat-primary">Club Post</a>

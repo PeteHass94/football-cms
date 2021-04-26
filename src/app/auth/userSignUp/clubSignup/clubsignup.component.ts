@@ -30,7 +30,7 @@ export class ClubSignupComponent implements OnInit, OnDestroy{
     role: [''],
     name: [''],
     username: [''],
-    club: [''],
+    club: ['club'],
     password: ['']
   });
 
