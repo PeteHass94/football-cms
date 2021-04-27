@@ -100,30 +100,7 @@ export class ClubViewAddTeamToTeamComponent implements OnInit, OnDestroy{
 
     }
 
-    // confirm() {
-    //   //console.log(this.selectedPlayers);
 
-    //   this.selectedPlayers.forEach(selectedPlayer => {
-    //     // console.log(selectedPlayer._id);
-    //     // let selectedPlayerId = selectedPlayer[0]._id;
-    //     // console.log(selectedPlayerId);
-    //     if(this.selectedTeam.players.indexOf(selectedPlayer._id) < 0){
-    //       this.clubService.addPlayerToTeamByIds(selectedPlayer._id, this.selectedTeam._id)
-    //       .subscribe(() => {});
-    //       console.log("player added to team");
-    //     }
-    //     //location.reload();
-
-    //     this._snackBar.open(
-    //       "Players Added to " + this.selectedTeam.teamName,
-    //      'Hide', {
-    //       duration: 3000
-    //     });
-
-    //   });
-
-
-    // }
 
     ngOnDestroy() {
       this.authStatusSub.unsubscribe();
